@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <h1>Welcome!</h1>
+
+    <section id="login">
+        <form action="/user_login" method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username"><br>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <div>
+        <a href="/signup">Create an account</a>        
+    </div>
+{% endblock %}

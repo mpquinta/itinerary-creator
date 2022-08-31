@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{username}}'s Homepage{% endblock %}
+
+{% block body %}
+    <section id="navigation">
+        <a href="/create_itinerary">Create a new itinerary</a> |
+        <a href="/itineraries">View your itineraries</a> |
+        <a href="/logout">Logout</a>
+    </section>
+
+    <h2>Start searching for places!</h2>
+
+    <!-- <form action="/search" method="POST"> -->
+    <form>
+        <label for="search-bar">Enter city or zipcode to where you're traveling to!</label><br>
+        <input type="text" name="search-bar" id="search-bar"><br>
+        <label for="category">Choose a category:</label><br>
+        <select id="category" name="category">
+            <option value="food">Food</option>
+            <option value="local flavor">Local Attractions</option>
+        </select>
+        
+        <button type="submit" id="search">Search</button>
+    </form>
+
+    <ul id="search-results"></ul>
+
+    <script src="/static/portal.js"></script>
+{% endblock %}

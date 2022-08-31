@@ -1,5 +1,6 @@
 """Models for itinerary app"""
 
+from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -30,7 +31,7 @@ class Listing(db.Model):
     listing_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     yelp_id = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
-    activity_type = db.Column(db.String, nullable=False)
+    # activity_type = db.Column(db.String, nullable=False)
     # itinerary_entries = a list of Entry objects
 
     def __repr__(self):
@@ -42,16 +43,32 @@ class Entry(db.Model):
     __tablename__ = "itinerary_entries"
 
     itinerary_entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    itinerary_id = db.Column(db.Integer, db.ForeignKey("itinerary.itinerary_id"))
     listing_id = db.Column(db.Integer, db.ForeignKey("listings.listing_id"))
     scheduled_day = db.Column(db.DateTime, default=datetime.now().strftime("%x"))
     # scheduled_time = db.Column(db.Integer) # use military time
 
-    user = db.relationship("User", backref="itinerary_entries")
+    itinerary = db.relationship("Itinerary", backref="itinerary_entries")
     listing = db.relationship("Listing", backref="itinerary_entries")
 
     def __repr__(self):
-        return f'<author={self.user_id} date={self.scheduled_day} itinerary_entry_id={self.itinerary_entry_id}>'
+        return f'<date={self.scheduled_day} itinerary_entry_id={self.itinerary_entry_id}>'
+
+class Itinerary(db.Model):
+    """An itinerary"""
+
+    __tablename__ = "itinerary"
+
+    itinerary_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String, default="My Itinerary")
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    # entry_id = db.Column(db.Integer, db.ForeignKey("itinerary_entries.itinerary_entry_id"))
+
+    user = db.relationship("User", backref="itinerary")
+    # entry = db.relationship("Entry", backref="itinerary")
+
+    def __repr__(self):
+        return f'<author={self.user_id} | itinerary_id={self.itinerary_id}>'
 
 def connect_to_db(flask_app, db_uri="postgresql:///itineraries", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
