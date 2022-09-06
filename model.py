@@ -31,7 +31,11 @@ class Listing(db.Model):
     listing_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     yelp_id = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
-    # activity_type = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    state = db.Column(db.String, nullable=False)
+    zipcode = db.Column(db.Integer, nullable=False)
+    photo_url = db.Column(db.String, nullable=False)
+    yelp_url = db.Column(db.String, nullable=False)
     # itinerary_entries = a list of Entry objects
 
     def __repr__(self):
@@ -46,8 +50,6 @@ class Entry(db.Model):
     itinerary_id = db.Column(db.Integer, db.ForeignKey("itinerary.itinerary_id"))
     listing_id = db.Column(db.Integer, db.ForeignKey("listings.listing_id"))
     scheduled_day = db.Column(db.DateTime, default=datetime.now().strftime("%x"))
-    # scheduled_time = db.Column(db.Integer) # use military time
-
     itinerary = db.relationship("Itinerary", backref="itinerary_entries")
     listing = db.relationship("Listing", backref="itinerary_entries")
 
@@ -62,6 +64,7 @@ class Itinerary(db.Model):
     itinerary_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String, default="My Itinerary")
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    likes = db.Column(db.Integer, default=0)
     # entry_id = db.Column(db.Integer, db.ForeignKey("itinerary_entries.itinerary_entry_id"))
 
     user = db.relationship("User", backref="itinerary")
