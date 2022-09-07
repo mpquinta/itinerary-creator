@@ -27,9 +27,9 @@ def user_exists(email):
         return False
 
 def login_info_matches(username, password):
-    login_info = User.query.filter_by(username=username).one()
-    if login_info.password == password:
-        
+    login_info = User.query.filter(User.username == username, User.password == password).first()
+    print(login_info)
+    if login_info:
         return True
     else:
         return False
@@ -111,6 +111,21 @@ def update_entry_time(entry_id, new_datetime):
 def delete_entry(entry_id):
     
     Entry.query.filter_by(itinerary_entry_id=entry_id).delete()
+
+def increase_like_count(itinerary_id):
+    # query to get how many likes a given itinerary has
+    likes = Itinerary.query.filter_by(itinerary_id=itinerary_id).first() 
+    # add 1 to it
+    current_num_likes = likes.likes
+    likes.likes = current_num_likes + 1 
+    # return the number
+    return likes
+
+def decrease_like_count():
+    # query to get how many likes a given itinerary has 
+    # subtract 1 to it
+    # return the number
+    pass
 
 if __name__ == '__main__':
     from server import app

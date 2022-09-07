@@ -3,7 +3,10 @@
 {% block title %}{{itinerary_name}}{% endblock %}
 
 {% block body %}
-    
+    <h1>{{itinerary_name}} by {{session.get("logged_in_user")}}</h1>
+    <p id="total-likes"></p>
+    <button id="like">Like</button>
+
     <div id="itinerary-list">
         <!-- <ul id="itinerary-list"></ul> -->
     </div>

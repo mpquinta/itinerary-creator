@@ -1,7 +1,7 @@
 """Server for itinerary app."""
 
+from crypt import methods
 import json
-from turtle import title
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
@@ -17,6 +17,9 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage"""
+
+    if session.get("logged_in_user"):
+        return redirect(f'/{session.get("logged_in_user")}/homepage')
 
     return render_template('homepage.html')
 
@@ -132,7 +135,9 @@ def new_itinerary():
     db.session.add(new_itinerary)
     db.session.commit()
 
-    return redirect('/')
+    flash(f"Sucessfully created an itinerary: {name}! Time to add to it!")
+
+    return redirect(f'/{session.get("logged_in_user")}/homepage')
 
 @app.route('/add_listing', methods=['POST'])
 def add_listing():
@@ -237,6 +242,19 @@ def delete_entry():
     db.session.commit()
 
     return jsonify({"success": True})
+
+# create an app that takes in itinerary id and updates the likes counter in db
+@app.route('/increase_likes', methods=['POST'])
+def increase_likes():
+    """Increases like count for a particular itinerary."""
+
+    # call crud function that increases like count
+    new_num_likes = crud.increase_like_count(session.get("current_itinerary"))
+    total_num_likes = new_num_likes.likes
+    db.session.add(new_num_likes)
+    db.session.commit()
+    
+    return jsonify(total_num_likes)
 
 if __name__ == '__main__':
     connect_to_db(app)
