@@ -127,6 +127,18 @@ def decrease_like_count():
     # return the number
     pass
 
+def get_itinerary_by_city_or_zipcode(**kwargs):
+    if kwargs.get("city"):
+        listings = Listing.query.filter_by(city=kwargs.get("city")).all()
+    elif kwargs.get("zipcode"):
+        listings = Listing.query.filter_by(zipcode=kwargs.get("zipcode")).all()
+    itineraries = set()
+    for listing in listings:
+        entries = listing.itinerary_entries
+        for entry in entries:
+            itineraries.add(entry.itinerary)
+    return itineraries.json()
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

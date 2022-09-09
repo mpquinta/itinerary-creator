@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Itineraries{% endblock %}
+
+{% block body %}
+    <h1>Browse Existing Itineraries</h1>
+
+    <form>
+        <label for="search-bar">Enter city or zipcode:</label>
+        <input type="text" name="search-location" id="search-location">
+        <button type="submit" id="search">Search</button>
+    </form>
+
+    <div id="top-rated"></div>
+
+    <div id="search-results"></div>
+
+    <script src="/static/browse_itineraries.js"></script>
+{% endblock %}

@@ -102,12 +102,9 @@ def results():
     # call a request to the Yelp API depending on keywords, filters, etc.
     search = request.args.get("search-bar")
     category = request.args.get("category")
-    print(category)
     listings = crud.request_location_info(search, category)
     all_listings = listings.get("businesses")
 
-    print(all_listings)
-    
     return jsonify(all_listings)
 
 # dynamic page - depending on listing!
@@ -255,6 +252,25 @@ def increase_likes():
     db.session.commit()
     
     return jsonify(total_num_likes)
+
+@app.route('/browse_itineraries')
+def display_all_itineraries():
+    """Webpage that allows a user to see all itineraries on website."""
+
+    return render_template('/browse_itineraries.html')
+
+@app.route('/search-itineraries')
+def db_itinerary_search():
+    """Make a query to the database to return all itineraries that include the desired city or zipcode."""
+
+    location = request.args.get("search-location")
+    itineraries = crud.get_itinerary_by_city_or_zipcode(city=location)
+    # if location.isdigit():
+    #     itineraries = crud.get_itinerary_by_city_or_zipcode(zipcode=location)
+    # else:
+    #     itineraries = crud.get_itinerary_by_city_or_zipcode(city=location)
+    
+    return jsonify(itineraries)
 
 if __name__ == '__main__':
     connect_to_db(app)
