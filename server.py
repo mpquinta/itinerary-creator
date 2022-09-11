@@ -205,13 +205,7 @@ def itinerary_page(itinerary_name, itinerary_id):
 
     return render_template("itinerary_details.html", itinerary_name=itinerary_name)
     
-# @app.route('/itineraries/<itinerary_name>_<itinerary_id>/edit')
-# def edit_entry(itinerary_name, itinerary_id):
-#     """Edit entry"""
-
-#     itinerary_entries = crud.get_itinerary_details(itinerary_id)
-#     return render_template("edit_entry.html", itinerary_entries=itinerary_entries, itinerary_name=itinerary_name, itinerary_id=itinerary_id)
-
+    
 @app.route('/itineraries/edit')
 def get_itinerary_info():
     """Returns a JSON response with all itinerary info"""
@@ -264,13 +258,20 @@ def db_itinerary_search():
     """Make a query to the database to return all itineraries that include the desired city or zipcode."""
 
     location = request.args.get("search-location")
-    itineraries = crud.get_itinerary_by_city_or_zipcode(city=location)
-    # if location.isdigit():
-    #     itineraries = crud.get_itinerary_by_city_or_zipcode(zipcode=location)
-    # else:
-    #     itineraries = crud.get_itinerary_by_city_or_zipcode(city=location)
+    # itineraries = crud.get_itinerary_by_city_or_zipcode(city=location)
+    # print(itineraries)
+    if location.isdigit():
+        itineraries = crud.get_itinerary_by_city_or_zipcode(zipcode=location)
+    else:
+        itineraries = crud.get_itinerary_by_city_or_zipcode(city=location.title())
     
     return jsonify(itineraries)
+
+@app.route('/popular_itineraries')
+def return_popular_itineraries():
+    """Make a query to the database to return top five most popular itineraries."""
+
+    return jsonify(crud.get_popular_itineraries())
 
 if __name__ == '__main__':
     connect_to_db(app)
