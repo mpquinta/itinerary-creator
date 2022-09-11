@@ -202,10 +202,11 @@ def itinerary_page(itinerary_name, itinerary_id):
     """Displays itinerary details."""
 
     session["current_itinerary"] = itinerary_id
+    username = crud.get_user_by_itinerary_id(itinerary_id)
 
-    return render_template("itinerary_details.html", itinerary_name=itinerary_name)
+    return render_template("itinerary_details.html", itinerary_name=itinerary_name, username=username)
     
-    
+
 @app.route('/itineraries/edit')
 def get_itinerary_info():
     """Returns a JSON response with all itinerary info"""

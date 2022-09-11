@@ -7,7 +7,6 @@ function getItineraryData() {
         .then((data) => {
             
             // return data
-            console.log(data)
             insertItineraryData(data)
             // createDropDownFields(data)
         });
