@@ -1,32 +1,32 @@
 'use strict';
 
-// retrieve itinerary entry data
-function getItineraryData() {
-    fetch('/itineraries/edit')
-        .then((response) => response.json())
-        .then((data) => {
+// // retrieve itinerary entry data
+// function getItineraryData() {
+//     fetch('/itineraries/edit')
+//         .then((response) => response.json())
+//         .then((data) => {
             
-            // return data
-            insertItineraryData(data)
-            // createDropDownFields(data)
-        });
-}
+//             // return data
+//             insertItineraryData(data)
+//             // createDropDownFields(data)
+//         });
+// }
 
-// update div on webpage with form with all listings
-const insertItineraryData = (response) => {
-    // Once the data has been provided by the server,
-    // insert it into the page as an HTML string.
+// // update div on webpage with form with all listings
+// const insertItineraryData = (response) => {
+//     // Once the data has been provided by the server,
+//     // insert it into the page as an HTML string.
 
-    const entryList = document.querySelector("#itinerary-list");
-    entryList.innerHTML = "";
+//     const entryList = document.querySelector("#itinerary-list");
+//     entryList.innerHTML = "";
 
-    for (const current_entry in response) {
-        const entry = document.createElement("p");
-        entry.setAttribute("id", response[current_entry]["id"])
-        entry.append(response[current_entry]["title"], " on ", response[current_entry]["datetime"])
-        entryList.append(entry)
-    }
-}
+//     for (const current_entry in response) {
+//         const entry = document.createElement("p");
+//         entry.setAttribute("id", response[current_entry]["id"])
+//         entry.append(response[current_entry]["title"], " on ", response[current_entry]["datetime"])
+//         entryList.append(entry)
+//     }
+// }
 
 const createDropDownFields = (response) => {
 
@@ -134,28 +134,28 @@ function editItinerary(evt) {
 }
 editBtn.addEventListener('click', editItinerary);
 
-// event listener for the like button
-const likeBtn = document.querySelector('#like');
-function increaseLikeCount(evt) {
-    evt.preventDefault();
+// // event listener for the like button
+// const likeBtn = document.querySelector('#like');
+// function increaseLikeCount(evt) {
+//     evt.preventDefault();
     
-    // send request to server to update itinerary's like count (send over itinerary id)
-    fetch('/increase_likes', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            const totalLikesContainer = document.querySelector("#total-likes");
-            totalLikesContainer.innerHTML = `${data} likes`;
-        })
-    // response will be updating the like counter on the page
-}
+//     // send request to server to update itinerary's like count (send over itinerary id)
+//     fetch('/increase_likes', {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         }
+//     })
+//         .then((response) => response.json())
+//         .then((data) => {
+//             console.log(data)
+//             const totalLikesContainer = document.querySelector("#total-likes");
+//             totalLikesContainer.innerHTML = `${data} likes`;
+//         })
+//     // response will be updating the like counter on the page
+// }
 
-likeBtn.addEventListener("click", increaseLikeCount);
+// likeBtn.addEventListener("click", increaseLikeCount);
 
-// call function as soon as page runs
-getItineraryData();
+// // call function as soon as page runs
+// // getItineraryData();

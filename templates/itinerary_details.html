@@ -10,12 +10,14 @@
     <div id="itinerary-list">
         <!-- <ul id="itinerary-list"></ul> -->
     </div>
-    
+    <script src="/static/itinerary_view_mode.js"></script>
     {% if session.get("logged_in_user") == username %}
         <button id="edit">Edit Itinerary</button>
 
         <div id="edit-fields"></div>
+
+        <script src="/static/itinerary.js"></script>
     {% endif %}
     
-    <script src="/static/itinerary.js"></script>
+    
 {% endblock %}
