@@ -101,8 +101,9 @@ def results():
 
     # call a request to the Yelp API depending on keywords, filters, etc.
     search = request.args.get("search-bar")
-    category = request.args.get("category")
-    listings = crud.request_location_info(search, category)
+    offset = request.args.get("offset")
+    print("offset value: ", offset)
+    listings = crud.request_location_info(search, offset=offset)
     all_listings = listings.get("businesses")
 
     return jsonify(all_listings)
