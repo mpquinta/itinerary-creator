@@ -2,20 +2,32 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="/static/css/sign-in.css">
+{% endblock %}
+
 {% block body %}
-    <h1>Welcome!</h1>
+    <body class="text-center">
+        <main class="form-signin w-100 m-auto">
+            <h1 class="h3 mb-3 fw-normal">Welcome!</h1>
 
-    <section id="login">
-        <form action="/user_login" method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username"><br>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-            <button type="submit">Login</button>
-        </form>
-    </section>
+            <section id="login">
+                <form action="/user_login" method="POST">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                        <label for="password">Password</label>
+                    </div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+                </form>
+            </section>
 
-    <div>
-        <a href="/signup">Create an account</a>        
-    </div>
+            <div>
+                <a href="/signup">Create an account</a>        
+            </div>
+        </main>
+    </body>
 {% endblock %}
