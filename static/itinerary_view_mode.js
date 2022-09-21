@@ -1,5 +1,24 @@
 'use strict';
 
+// function that creates container for search results
+const createCardAndAddToContainer = (title, date) => {
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("row g-0");
+    cardElement.innerHTML = `
+        <div class="col-md-4">
+            <img src="..." class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">${date}</small></p>
+            </div>
+        </div>
+    `;
+    return cardElement
+};
+
 // retrieve itinerary entry data
 function getItineraryData() {
     fetch('/itineraries/edit')
@@ -17,7 +36,7 @@ const insertItineraryData = (response) => {
     // Once the data has been provided by the server,
     // insert it into the page as an HTML string.
 
-    const entryList = document.querySelector("#itinerary-list");
+    let entryList = document.querySelector("#itinerary-list");
     entryList.innerHTML = "";
 
     for (const current_entry in response) {
@@ -25,7 +44,8 @@ const insertItineraryData = (response) => {
         entry.setAttribute("id", response[current_entry]["id"])
         entry.append(response[current_entry]["title"], " on ", response[current_entry]["datetime"])
         entryList.append(entry)
-    }
+        // entryList.insertAdjacentElement('beforeend', createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"])
+    };
 }
 getItineraryData();
 

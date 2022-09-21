@@ -4,12 +4,31 @@
 
 {% block body %}
     <h1>{{itinerary_name}} by {{username}}</h1>
-    <p id="total-likes"></p>
+    
     <button id="like">Like</button>
+    <p id="total-likes"></p>
 
+    <div class="card mb-3" style="max-width: 840px;" class="itinerary-list">
+        <!-- start loop here -->
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="..." class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+        <!-- end loop here -->
+
+    </div>
+<!-- 
     <div id="itinerary-list">
         <!-- <ul id="itinerary-list"></ul> -->
-    </div>
+    <!-- </div> -->
     <script src="/static/itinerary_view_mode.js"></script>
     {% if session.get("logged_in_user") == username %}
         <button id="edit">Edit Itinerary</button>
@@ -18,6 +37,5 @@
 
         <script src="/static/itinerary.js"></script>
     {% endif %}
-    
-    
+
 {% endblock %}
