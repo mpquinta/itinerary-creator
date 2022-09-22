@@ -1,13 +1,35 @@
 'user strict';
 
 // function that creates div for each itinerary
+const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => {
+    const cardElement = document.createElement("div");
+    cardElement.setAttribute("class", "carousel-item active");
+    // cardElement.classList.add("carousel-item");
+    cardElement.innerHTML = `
+        <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+            <h5>${title}</h5>
+            <p>${author} | Total likes: ${likes}</p>
+            <form action="/itineraries/${title}_${id}">
+                <button type="button" class="btn btn-primary">View</button>
+            </form>
+        </div>
+    `;
+    return cardElement
+};
+
 const createCardAndAddToContainer = (id, title, author, likes) => {
     const cardElement = document.createElement("div");
-    cardElement.classList.add("card");
+    cardElement.classList.add("carousel-item");
     cardElement.innerHTML = `
-        <h2><a href="/itineraries/${title}_${id}">${title}</a></h2>
-        ${author}<br>
-        Total likes: ${likes}
+        <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+            <h5>${title}</h5>
+            <p>${author} | Total likes: ${likes}</p>
+            <form action="/itineraries/${title}_${id}">
+                <button type="button" class="btn btn-primary">View</button>
+            </form>
+        </div>
     `;
     return cardElement
 };
@@ -20,17 +42,28 @@ fetch('/popular_itineraries')
         // call back function - update webpage with top five itineraries
         popularItinerariesContainer = document.querySelector("#popular-itineraries");
         popularItinerariesContainer.innerHTML = "";
+        popularItinerariesContainer.append(popularItineraries);
 
-        for (const itinerary in popularItineraries) {
-            cardElement = createCardAndAddToContainer(
-                popularItineraries[itinerary].itinerary_id, 
-                popularItineraries[itinerary].name, 
-                popularItineraries[itinerary].username, 
-                popularItineraries[itinerary].likes
-            )
-            document.querySelector("#popular-itineraries").append(cardElement);
+        for (itinerary in popularItineraries) {
+            if (itinerary === 0) {
+                cardElement = createActiveCarouselItemAndAddToContainer (
+                    popularItineraries[itinerary].itinerary_id, 
+                    popularItineraries[itinerary].name, 
+                    popularItineraries[itinerary].username, 
+                    popularItineraries[itinerary].likes
+                )
+                popularItinerariesContainer.append("first one");
+            } else {
+                cardElement = createCardAndAddToContainer(
+                    popularItineraries[itinerary].itinerary_id, 
+                    popularItineraries[itinerary].name, 
+                    popularItineraries[itinerary].username, 
+                    popularItineraries[itinerary].likes
+                )
+                popularItinerariesContainer.append(itinerary);  
+            }
         }
-    })
+    });
     
 
 // event listener for the submit search button

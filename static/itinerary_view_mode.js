@@ -1,7 +1,7 @@
 'use strict';
 
 // function that creates container for search results
-const createCardAndAddToContainer = (title, date, photo_url) => {
+const createCardAndAddToContainer = (title, date, photo_url, address) => {
 
     const cardElement = document.createElement("div");
     cardElement.setAttribute("class", "row g-0")
@@ -12,7 +12,7 @@ const createCardAndAddToContainer = (title, date, photo_url) => {
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">${title}</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text">${address}</p>
                 <p class="card-text"><small class="text-muted">${date}</small></p>
             </div>
         </div>
@@ -41,7 +41,7 @@ const insertItineraryData = (response) => {
     entryList.innerHTML = "";
 
     for (const current_entry in response) {
-        const cardElement = createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"], response[current_entry]["photo_url"])
+        const cardElement = createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"], response[current_entry]["photo_url"], response[current_entry]["address"])
         entryList.append(cardElement)
     };
 }

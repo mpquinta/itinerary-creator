@@ -105,6 +105,7 @@ def get_itinerary_details(itinerary_id):
             "id": query_entries[i].itinerary_entry_id,
             "datetime": query_entries[i].scheduled_day.strftime("%m/%d/%Y, %I:%M%p"),
             "username": query_entries[i].itinerary.user.username,
+            "address": query_entries[i].listing.city + ", " + query_entries[i].listing.state + " " + str(query_entries[i].listing.zipcode),
             "photo_url": query_entries[i].listing.photo_url
         }
     
