@@ -7,7 +7,7 @@ const createCardAndAddToContainer = (title, date, photo_url, address) => {
     cardElement.setAttribute("class", "row g-0")
     cardElement.innerHTML = `
         <div class="col-md-4">
-            <img src="${photo_url}" class="img-fluid rounded-start" alt="...">
+            <img src="${photo_url}" class="img-fluid rounded-start" id="img-search-results" alt="${title}">
         </div>
         <div class="col-md-8">
             <div class="card-body">

@@ -12,8 +12,10 @@ body {
 }
 
 .form-signin {
-  max-width: 330px;
+  max-width: 550px;
   padding: 15px;
+  background-color: #C5C9A4;
+  border-radius: 25px;
 }
 
 .form-signin .form-floating:focus-within {
@@ -30,4 +32,7 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+#logo {
+  width: 250px;
 }
