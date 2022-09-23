@@ -1,0 +1,24 @@
+.contact-icons {
+    height: 18px;
+    width: 18px;
+}
+
+.listing-page-carousel-pic {
+    object-fit: cover;
+    width: 500px;
+    height: 500px;
+  }
+
+#img-search-results {
+    object-fit: cover;
+    width: 420px;
+    height: 258px;
+  }
+
+#hours-of-operations {
+    border-color: white;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #476A6F !important;
+}

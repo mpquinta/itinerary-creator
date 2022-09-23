@@ -6,6 +6,7 @@ from flask import (Flask, render_template, request, flash, session, redirect, js
 from model import connect_to_db, db
 import crud
 from jinja2 import StrictUndefined
+from datetime import datetime
 
 # creates a server
 app = Flask(__name__)
@@ -117,7 +118,15 @@ def listing_page(yelp_id):
     listing_info = crud.request_listing_info(yelp_id)
     user = crud.get_user(session.get("logged_in_user"))
     itineraries = crud.get_itinerary(user.user_id)
-    return render_template('listing_details.html', listing_info=listing_info, itineraries=itineraries)
+
+    hours = {}
+    for day in listing_info["hours"][0]["open"]:
+        hours[day["day"]] = {
+            "start": datetime.strptime(day["start"], "%H%M").strftime("%I:%M%p"),
+            "end": datetime.strptime(day["end"], "%H%M").strftime("%I:%M%p")
+        }
+
+    return render_template('listing_details.html', listing_info=listing_info, itineraries=itineraries, hours=hours)
 
 @app.route('/create_itinerary')
 def create_itinerary_page():
@@ -164,30 +173,6 @@ def add_listing():
     flash(f"{title} successfully added to {new_entry.itinerary.name}!")
 
     return redirect(f'/listing/{yelp_id}')
-
-    # results = request.get_json()
-    # print(results)
-
-    # yelp_id = request.get_json().get("yelpId")
-    # title = request.get_json().get("yelpTitle")
-    # city = request.get_json().get("city")
-    # state = request.get_json().get("state")
-    # zipcode = request.get_json().get("zipcode")
-    # photo_url = request.get_json().get("imageUrl")
-    # yelp_url = request.get_json().get("url")
-    # itinerary = request.get_json().get("itinerary")
-    # datetime = request.get_json().get("dateTime")
-
-    # new_listing = crud.create_listing(yelp_id, title, city, state, zipcode, photo_url, yelp_url)
-    # db.session.add(new_listing)
-    # db.session.commit()
-    # new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
-    # db.session.add(new_entry)
-    # db.session.commit()
-
-    flash(f"{title} successfully added to {new_entry.itinerary.name}!")
-
-    return jsonify({"success": True})
 
 @app.route('/itineraries')
 def itineraries():

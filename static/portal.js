@@ -6,7 +6,7 @@ const createCardAndAddToContainer = (id, title, category, photo_url, yelp_url) =
     cardElement.classList.add("col");
     cardElement.innerHTML = `
         <div class="card shadow-sm">
-            <img src="${photo_url}" class="bd-placeholder-img card-img-top" width="100%" height="228">
+            <img src="${photo_url}" class="bd-placeholder-img card-img-top" id="img-search-results">
                 <div class="card-body">
                     <p class="card-text">
                         <h2><a href="/listing/${id}">${title}</a></h2>
