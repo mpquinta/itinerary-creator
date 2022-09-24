@@ -30,9 +30,10 @@
 
 const createDropDownFields = (response) => {
 
-    // create drop down fields
+    // create drop down fields and label
     let dropDownMenu = document.createElement("select");
     dropDownMenu.setAttribute("id", "selected-entry");
+    dropDownMenu.setAttribute("class", "form-select");
 
     for (const current_entry in response) {
         let option = document.createElement("option");
@@ -42,10 +43,17 @@ const createDropDownFields = (response) => {
         dropDownMenu.append(option);
     }
 
-    // create field for datetime
+    let dropDownMenuLabel = document.createElement("label")
+    dropDownMenuLabel.innerHTML = "Select a listing you want to edit:"
+
+    // create field for datetime and label
     let dateTime = document.createElement("input");
     dateTime.setAttribute("type", "datetime-local");
     dateTime.setAttribute("id", "new-datetime");
+    dateTime.setAttribute("class", "form-select");
+
+    let dateTimeLabel = document.createElement("label")
+    dateTimeLabel.innerHTML = "Select a new date/time:"
 
     // create update button
     const updateBtn = document.createElement("button");
@@ -60,9 +68,23 @@ const createDropDownFields = (response) => {
     delBtn.setAttribute("class", "btn btn-primary");
     delBtn.innerHTML = "Delete";
 
+    //create close button
+    const closeBtn = document.createElement("button");
+    closeBtn.setAttribute("type", "button");
+    closeBtn.setAttribute("id", "close");
+    closeBtn.setAttribute("class", "btn btn-primary");
+    closeBtn.setAttribute("data-bs-dismiss", "modal");
+    closeBtn.innerHTML = "Close";
+
     // add drop-down fields and buttons to page
     const fieldContainers = document.querySelector("#edit-fields");
-    fieldContainers.append(dropDownMenu, dateTime, updateBtn, delBtn);
+    fieldContainers.innerHTML = "";
+    fieldContainers.append(updateBtn, delBtn, closeBtn);
+
+    const listingDropdown = document.querySelector("#listing-dropdown");
+    listingDropdown.innerHTML = "";
+    listingDropdown.append(dropDownMenuLabel, dropDownMenu, dateTimeLabel, dateTime);
+
 
     // create event listener for update button
     function updateEntry(evt) {
@@ -121,8 +143,6 @@ const createDropDownFields = (response) => {
 const editBtn = document.getElementById('edit')
 function editItinerary(evt) {
     evt.preventDefault();
-    // gray out the edit button until editing is over
-    editBtn.disabled = true;
 
     // create drop down menu with all the user's itineraries
     fetch('/itineraries/edit')

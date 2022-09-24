@@ -4,9 +4,9 @@
 const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => {
     const cardElement = document.createElement("div");
     cardElement.setAttribute("class", "carousel-item active");
-    let randomNum = Math.floor((Math.random() * 10) + 1);
+    let randomNum = Math.floor((Math.random() * 7) + 1);
     cardElement.innerHTML = `
-        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel">
+        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel" style="object-fit: cover;">
         <div class="carousel-caption d-none d-md-block">
             <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>
@@ -21,9 +21,9 @@ const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => 
 const createCardAndAddToContainer = (id, title, author, likes) => {
     const cardElement = document.createElement("div");
     cardElement.classList.add("carousel-item");
-    let randomNum = Math.floor((Math.random() * 10) + 1);
+    let randomNum = Math.floor((Math.random() * 7) + 1);
     cardElement.innerHTML = `
-        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel">
+        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel style="object-fit: cover;">
         <div class="carousel-caption d-none d-md-block">
             <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>

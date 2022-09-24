@@ -2,6 +2,7 @@
 
 from crypt import methods
 import json
+from unicodedata import category
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
@@ -104,7 +105,12 @@ def results():
 
     # call a request to the Yelp API depending on keywords, filters, etc.
     search = request.args.get("search-bar")
-    listings = crud.request_location_info(search)
+    category_choice = request.args.get("category")
+    if category_choice == "activities":
+        category = "local flavor"
+    else:
+        category = "food"
+    listings = crud.request_location_info(search, category)
     all_listings = listings.get("businesses")
 
     return jsonify(all_listings)
@@ -120,11 +126,12 @@ def listing_page(yelp_id):
     itineraries = crud.get_itinerary(user.user_id)
 
     hours = {}
-    for day in listing_info["hours"][0]["open"]:
-        hours[day["day"]] = {
-            "start": datetime.strptime(day["start"], "%H%M").strftime("%I:%M%p"),
-            "end": datetime.strptime(day["end"], "%H%M").strftime("%I:%M%p")
-        }
+    if "hours" in listing_info:
+        for day in listing_info["hours"][0]["open"]:
+            hours[day["day"]] = {
+                "start": datetime.strptime(day["start"], "%H%M").strftime("%I:%M%p"),
+                "end": datetime.strptime(day["end"], "%H%M").strftime("%I:%M%p")
+            }
 
     return render_template('listing_details.html', listing_info=listing_info, itineraries=itineraries, hours=hours)
 
