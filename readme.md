@@ -29,4 +29,4 @@ I plan on continuing to customize the application to include more features that 
 Weather forecasting - Include weather information for selected date. This information can dictate what the user would like to do for the day - for example, if it was raining on a particular day, the user might decide to save outside activities for another day.
 
 # Screenshots
-![alt text] (/static/Screenshots/user-homepage.png)
+![User homepage] (static/Screenshots/user-homepage.png "User homepage")
