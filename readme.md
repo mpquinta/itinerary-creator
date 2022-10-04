@@ -30,3 +30,6 @@ Weather forecasting - Include weather information for selected date. This inform
 
 # Screenshots
 [![user-homepage.png](https://i.postimg.cc/hvjMKCGT/user-homepage.png)](https://postimg.cc/1nkDHrw3)
+[![listing-page.png](https://i.postimg.cc/0jBnjp63/listing-page.png)](https://postimg.cc/K3tBs3Dr)
+[![edit-itinerary.png](https://i.postimg.cc/vBX3FRGG/edit-itinerary.png)](https://postimg.cc/wyyhLGtr)
+[![browse-existing-itineraries.png](https://i.postimg.cc/HxTBhWDS/browse-existing-itineraries.png)](https://postimg.cc/PLFWLjqZ)
