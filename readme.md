@@ -9,7 +9,7 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
  - Screenshots
  - Improvement
 
- # Technologies Used
+ [Technologies Used] (#technologies-used)
 - Python
 - Flask
 - PostgreSQL/SQLAlchemy
