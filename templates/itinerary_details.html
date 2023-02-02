@@ -5,8 +5,8 @@
 {% block body %}
     <h1>{{itinerary_name}} by {{username}}</h1>
     
-    <button id="like">Like</button>
-    <p id="total-likes"></p>
+    <button id="like" class="btn btn-success">Like</button>
+    <span id="total-likes"></span>
 
     <div class="card mb-3" style="max-width: 840px;" id="itinerary-list">
 
@@ -14,9 +14,9 @@
 
     <script src="/static/itinerary_view_mode.js"></script>
     {% if session.get("logged_in_user") == username %}
-        <button id="edit">Edit Itinerary</button>
+        <button id="edit" class="btn btn-primary">Edit Itinerary</button>
 
-        <div id="edit-fields"></div>
+        <span id="edit-fields"></span>
 
         <script src="/static/itinerary.js"></script>
     {% endif %}

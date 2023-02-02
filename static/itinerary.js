@@ -50,12 +50,14 @@ const createDropDownFields = (response) => {
     // create update button
     const updateBtn = document.createElement("button");
     updateBtn.setAttribute("type", "submit");
+    updateBtn.setAttribute("class", "btn btn-primary");
     updateBtn.innerHTML = "Update";
 
     //create delete button
     const delBtn = document.createElement("button");
     delBtn.setAttribute("type", "submit");
     delBtn.setAttribute("id", "delete");
+    delBtn.setAttribute("class", "btn btn-primary");
     delBtn.innerHTML = "Delete";
 
     // add drop-down fields and buttons to page
