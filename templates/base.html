@@ -19,6 +19,14 @@
         {% block head %}{% endblock %}
     </head>
     <body>
+        {% if session.get("logged_in_user") %}
+            <section id="navigation">
+                <a href="/create_itinerary">Create a new itinerary</a> |
+                <a href="/itineraries">View your itineraries</a> |
+                <a href="/browse_itineraries">Browse itineraries</a> |
+                <a href="/logout">Logout</a>
+            </section>
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
 </html>
