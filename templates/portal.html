@@ -3,7 +3,7 @@
 {% block title %}{{username}}'s Homepage{% endblock %}
 
 {% block body %}
-
+    <!-- search bar -->
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -20,18 +20,17 @@
                 </p>
             </div>
         </div>
+    </section>
+
     
     <!-- section for search results  -->
-    <div class="album py-5 bg-light" id="search-results">
+    <div class="album py-5 bg-light">
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
-                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
-                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="search-results">
+
             </div>
         </div>
     </div>
-    <ul id="search-results"></ul>
-    </center>
+
     <script src="/static/portal.js"></script>
 {% endblock %}

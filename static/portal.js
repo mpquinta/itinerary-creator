@@ -1,12 +1,19 @@
 'use strict';
 
 // function that creates container for search results
-const createCardAndAddToContainer = (id, title, author, likes) => {
+const createCardAndAddToContainer = (id, title, category, photo_url, yelp_url) => {
     const cardElement = document.createElement("div");
     cardElement.classList.add("col");
     cardElement.innerHTML = `
         <div class="card shadow-sm">
-            <img src="${photo_url}" class="bd-placeholder-img card-img-top" width="100%" height="225">
+            <img src="${photo_url}" class="bd-placeholder-img card-img-top" width="100%" height="228">
+                <div class="card-body">
+                    <p class="card-text">
+                        <h2><a href="/listing/${id}">${title}</a></h2>
+                        ${category}
+                    </p>
+                </div>
+            </div>
         </div>
     `;
     return cardElement
@@ -29,8 +36,9 @@ function displayResults(evt) {
         let searchResults = document.querySelector('#search-results');
         searchResults.innerHTML = "";
         for (const listing of all_listings) {
-            // console.log(listing["name"])
-            searchResults.insertAdjacentHTML('beforeend', `<li><a href="/listing/${listing["id"]}">${listing["name"]}</a></li>`);
+            console.log(listing["name"])
+            searchResults.insertAdjacentElement('beforeend', createCardAndAddToContainer(listing["id"], listing["name"], listing["categories"][0]["title"], listing["image_url"], listing["url"]))
+            // searchResults.insertAdjacentHTML('beforeend', `<li><a href="/listing/${listing["id"]}">${listing["name"]}</a></li>`);
         }
     });
 }
