@@ -1,12 +1,13 @@
 'use strict';
 
 // function that creates container for search results
-const createCardAndAddToContainer = (title, date) => {
+const createCardAndAddToContainer = (title, date, photo_url) => {
+
     const cardElement = document.createElement("div");
-    cardElement.classList.add("row g-0");
+    cardElement.setAttribute("class", "row g-0")
     cardElement.innerHTML = `
         <div class="col-md-4">
-            <img src="..." class="img-fluid rounded-start" alt="...">
+            <img src="${photo_url}" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -40,11 +41,8 @@ const insertItineraryData = (response) => {
     entryList.innerHTML = "";
 
     for (const current_entry in response) {
-        const entry = document.createElement("p");
-        entry.setAttribute("id", response[current_entry]["id"])
-        entry.append(response[current_entry]["title"], " on ", response[current_entry]["datetime"])
-        entryList.append(entry)
-        // entryList.insertAdjacentElement('beforeend', createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"])
+        const cardElement = createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"], response[current_entry]["photo_url"])
+        entryList.append(cardElement)
     };
 }
 getItineraryData();

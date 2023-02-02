@@ -103,8 +103,9 @@ def get_itinerary_details(itinerary_id):
         entries[i] = {
             "title": query_entries[i].listing.title,
             "id": query_entries[i].itinerary_entry_id,
-            "datetime": query_entries[i].scheduled_day,
-            "username": query_entries[i].itinerary.user.username
+            "datetime": query_entries[i].scheduled_day.strftime("%m/%d/%Y, %I:%M%p"),
+            "username": query_entries[i].itinerary.user.username,
+            "photo_url": query_entries[i].listing.photo_url
         }
     
     return entries
