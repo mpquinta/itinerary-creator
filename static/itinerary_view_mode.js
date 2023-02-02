@@ -1,7 +1,7 @@
 'use strict';
 
 // function that creates container for search results
-const createCardAndAddToContainer = (title, date, photo_url, address) => {
+const createCardAndAddToContainer = (title, date, photo_url, address, yelp_id) => {
 
     const cardElement = document.createElement("div");
     cardElement.setAttribute("class", "row g-0")
@@ -9,11 +9,15 @@ const createCardAndAddToContainer = (title, date, photo_url, address) => {
         <div class="col-md-4">
             <img src="${photo_url}" class="img-fluid rounded-start" id="img-search-results" alt="${title}">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card-body">
                 <h5 class="card-title">${title}</h5>
-                <p class="card-text">${address}</p>
                 <p class="card-text"><small class="text-muted">${date}</small></p>
+                <p class="card-text">
+                ${address}<br>
+                <img src="https://www.seekpng.com/png/detail/16-165938_png-file-web-site-icon-vector.png" alt="website icon" class="contact-icons"><a href="/listing/${yelp_id}"> Listing page</a><br>
+                </p>
+                
             </div>
         </div>
     `;
@@ -41,7 +45,7 @@ const insertItineraryData = (response) => {
     entryList.innerHTML = "";
 
     for (const current_entry in response) {
-        const cardElement = createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"], response[current_entry]["photo_url"], response[current_entry]["address"])
+        const cardElement = createCardAndAddToContainer(response[current_entry]["title"], response[current_entry]["datetime"], response[current_entry]["photo_url"], response[current_entry]["address"], response[current_entry]["yelp_id"])
         entryList.append(cardElement)
     };
 }
@@ -89,3 +93,5 @@ function increaseLikeCount(evt) {
 }
 
 likeBtn.addEventListener("click", increaseLikeCount);
+
+

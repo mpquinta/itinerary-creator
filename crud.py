@@ -63,13 +63,13 @@ def request_listing_info(yelp_id):
 
     return yelp_data
 
-def request_location_info(location):
+def request_location_info(location, category):
 
     ENDPOINT = "https://api.yelp.com/v3/businesses/search"
     # CATEGORIES = ["food", "local flavor", "tours", "shopping", "parks"]
     params = {
+        "term": category,
         "location": location,
-        "category": "food,local flavor,tours,shopping,parks",
         "radius": 40000, 
         "limit": 50,
     }
@@ -106,7 +106,8 @@ def get_itinerary_details(itinerary_id):
             "datetime": query_entries[i].scheduled_day.strftime("%m/%d/%Y, %I:%M%p"),
             "username": query_entries[i].itinerary.user.username,
             "address": query_entries[i].listing.city + ", " + query_entries[i].listing.state + " " + str(query_entries[i].listing.zipcode),
-            "photo_url": query_entries[i].listing.photo_url
+            "photo_url": query_entries[i].listing.photo_url,
+            "yelp_id": query_entries[i].listing.yelp_id
         }
     
     return entries

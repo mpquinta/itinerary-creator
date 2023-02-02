@@ -25,10 +25,9 @@ function displayResults(evt) {
     evt.preventDefault();
 
     const location = document.querySelector('#search-bar').value;
-    // const category = document.querySelector('#category').value;    
+    const category = document.querySelector('[name="category"]:checked').value;    
 
-    const url = `/search?search-bar=${location}`
-    console.log(url)
+    const url = `/search?search-bar=${location}&category=${category}`
 
     fetch(url)
     .then((response) => response.json())
@@ -36,7 +35,6 @@ function displayResults(evt) {
         let searchResults = document.querySelector('#search-results');
         searchResults.innerHTML = "";
         for (const listing of all_listings) {
-            console.log(listing["name"])
             searchResults.insertAdjacentElement('beforeend', createCardAndAddToContainer(listing["id"], listing["name"], listing["categories"][0]["title"], listing["image_url"], listing["url"]))
             document.querySelector("#search-results-container").setAttribute("class", "album py-5 bg-light")
         }

@@ -7,11 +7,31 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h2 class="fw-light">Start searching!</h2>
+                <img src="/static/img/search.png" alt="search">
+                <!-- <h2 class="fw-light">Start searching!</h2> -->
                 <p>
                     <form>
                         <div class="col-auto">
                             <input type="text" class="form-control" name="search-bar" id="search-bar" placeholder="Enter city or zipcode">
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto form-check">
+                                    <input class="form-check-input" type="radio" name="category" id="all" value="food">
+                                    <label class="form-check-label" for="all">All</label>
+                            </div>
+                            <div class="col-auto form-check">
+                                
+                                    <input class="form-check-input" type="radio" name="category" id="food" value="food">
+                                    <label class="form-check-label" for="food">Food</label>
+
+                            </div>
+                            <div class="col-auto form-check">
+
+                                    <input class="form-check-input" type="radio" name="category" id="activities" value="activities">
+                                    <label class="form-check-label" for="activities">Activities</label>
+
+                            </div>
+
                         </div>
                         <div class="col-auto">
                             <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Search</button>

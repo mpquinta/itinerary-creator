@@ -4,21 +4,40 @@
 
 {% block body %}
 <main class="container">
-    <h1>"{{itinerary_name}}" by {{username}}
-    
+    <h1>"{{itinerary_name}}" by {{username}}</h1>
     <button id="like" class="btn btn-success">Like</button>
-    </h1>
-    <span id="total-likes"></span>
+    <span id="total-likes" class="badge text-bg-secondary"></span>
+    
 
-    <div class="card mb-3" style="max-width: 840px;" id="itinerary-list">
+    <div class="card mb-1" style="max-width: 550px;" id="itinerary-list">
 
     </div>
 
     <script src="/static/itinerary_view_mode.js"></script>
     {% if session.get("logged_in_user") == username %}
-        <button id="edit" class="btn btn-primary">Edit Itinerary</button>
 
-        <span id="edit-fields"></span>
+        <!-- Button trigger modal -->
+        <button type="button" id="edit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Edit Itinerary
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit {{itinerary_name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listing-dropdown"></div>
+                </div>
+                <div class="modal-footer" id="edit-fields">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+            </div>
+        </div>
 
         <script src="/static/itinerary.js"></script>
     {% endif %}
