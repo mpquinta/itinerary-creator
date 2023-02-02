@@ -19,6 +19,14 @@ const createCardAndAddToContainer = (id, title, category, photo_url, yelp_url) =
     return cardElement
 };
 
+// function that creates a button
+const createBtn = () => {
+    const btn = document.createElement("button");
+    btn.setAttribute('type', 'submit');
+    btn.classList.add("w-100 btn btn-lg btn-primary");
+    btn.innerHTML = "Test"
+}
+
 // List search results
 const searchBtn = document.querySelector('#search');
 function displayResults(evt) {
@@ -33,11 +41,18 @@ function displayResults(evt) {
     .then((response) => response.json())
     .then((all_listings) => {
         let searchResults = document.querySelector('#search-results');
+        let searchBtns = document.querySelector('#next_prev');
         searchResults.innerHTML = "";
+
         for (const listing of all_listings) {
             searchResults.insertAdjacentElement('beforeend', createCardAndAddToContainer(listing["id"], listing["name"], listing["categories"][0]["title"], listing["image_url"], listing["url"]))
             document.querySelector("#search-results-container").setAttribute("class", "album py-5 bg-light")
         }
+
+        // add "next" button
+        searchBtns.appendChild('beforeend', createBtn());
+        
+
     });
 }
 searchBtn.addEventListener('click', displayResults);
