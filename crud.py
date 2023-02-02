@@ -2,6 +2,7 @@
 
 import os
 import json
+from unittest import result
 import requests
 from model import db, User, Listing, Entry, Itinerary, connect_to_db
 
@@ -137,7 +138,34 @@ def get_itinerary_by_city_or_zipcode(**kwargs):
         entries = listing.itinerary_entries
         for entry in entries:
             itineraries.add(entry.itinerary)
-    return itineraries.json()
+    
+    itineraries_list = list(itineraries)
+    
+    result_itineraries = {}
+    for i in range(len(itineraries_list)):
+        result_itineraries[i] = {
+            "itinerary_id": itineraries_list[i].itinerary_id,
+            "name": itineraries_list[i].name,
+            "username": itineraries_list[i].user.username, 
+            "likes": itineraries_list[i].likes 
+        }        
+
+    return result_itineraries
+
+def get_popular_itineraries():
+
+    itineraries = Itinerary.query.order_by(Itinerary.likes.desc()).all()
+    
+    result_itineraries = {}
+    for i in range(0, 5):
+        result_itineraries[i] = {
+            "itinerary_id": itineraries[i].itinerary_id, 
+            "name": itineraries[i].name,
+            "username": itineraries[i].user.username,
+            "likes": itineraries[i].likes
+        }
+    return result_itineraries
+        
 
 if __name__ == '__main__':
     from server import app
