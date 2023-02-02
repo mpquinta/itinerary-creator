@@ -12,7 +12,7 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
  # Technologies Used
 - Python
 - Flask
-- SQLAlchemy
+- PostgreSQL/SQLAlchemy
 - JavaScript
 - AJAX/JSON
 - Jinja2
@@ -22,3 +22,11 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
 - Yelp API
 
 (Dependencies are listed in requirements.txt)
+
+# Improvements
+I plan on continuing to customize the application to include more features that will further streamline trip planning. 
+
+Weather forecasting - Include weather information for selected date. This information can dictate what the user would like to do for the day - for example, if it was raining on a particular day, the user might decide to save outside activities for another day.
+
+# Screenshots
+[alt text] (/static/Screenshots/user-homepage.png)
