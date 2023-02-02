@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Itinerary{% endblock %}
+
+{% block body %}
+    <form action="/itineraries/{{itinerary_name}}_{{itinerary_id}}/edit" method="POST">
+        <label for="entry_change">Choose activity and new date and/or time:</label><br>
+        <select id="entry_change" name="entry_change">
+            {% for entry in itinerary_entries %}
+                <option value="entry.itinerary_id">{{entry.listing.title}}</option>
+            {% endfor %}
+            <input type="datetime-local" name="datetime" id="datetime">
+            <button type="submit">Update</button>
+        </select>
+
+
+    </form>
+{% endblock %}

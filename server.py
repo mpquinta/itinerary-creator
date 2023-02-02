@@ -1,8 +1,9 @@
 """Server for itinerary app."""
 
-from flask import (Flask, render_template, request, flash, session, redirect)
+import json
+from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
-# import crud
+import crud
 from jinja2 import StrictUndefined
 
 # creates a server
@@ -18,62 +19,219 @@ def homepage():
 
     return render_template('homepage.html')
 
-# # TODO
-# @app.route()
-# def user_login():
-#     """Allow users to login to their account"""
+@app.route('/user_login', methods=["POST"])
+def user_login():
+    """Allow users to login to their account"""
 
-#     # GET method to retrieve values from username and password forms?
-#     # Call db to make sure username and password matches what's in db?
-#     # Conditional statement - if matches, redirect to homepage and flash success message
-#     # Conditional statement - else, flash message "Username and/or password didn't match"
+    # GET method to retrieve values from username and password forms?
+    username = request.form.get("username")
+    password = request.form.get("password")
+    # Call db to make sure username and password matches what's in db?
+    if crud.login_info_matches(username, password):
+        flash("You've successfully signed in!")
+        session["logged_in_user"] = username
+        return redirect(f'/{username}/homepage')
+    # Conditional statement - if matches, redirect to homepage and flash success message
+    # Conditional statement - else, flash message "Username and/or password didn't match"
+    else: 
+        flash("Your username and/or password didn't match. Please try again.")
+        return redirect('/')
 
-#     pass
+@app.route('/logout')
+def logout():
+    del session["logged_in_user"]
 
-# @app.route()
-# def create_acc():
-#     """User can create an account"""
+    return redirect("/")
 
-#     # POST method to save user info by creating new record in User table in db
-#     # Conditional statement - if username and/or email matches a record in the db, throw error
-#     # Conditional statement - else, redirect user to homepage and flash success message
+@app.route('/create_user', methods=['POST'])
+def create_acc():
+    """User can create an account"""
 
-#     pass
+    # POST method to save user info by creating new record in User table in db
+    fname = request.form.get("fname")
+    lname = request.form.get("lname")
+    email = request.form.get("email")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    
+    # Conditional statement - if username and/or email matches a record in the db, throw error
+    if crud.user_exists(email):
+        print("Sorry, a user with that email already exists.")
+    else:
+        new_user = crud.create_user(fname, lname, email, username, password)
+        db.session.add(new_user)
+        db.session.commit()
+        new_itinerary = crud.create_itinerary(new_user.user_id, "Favorites")
+        db.session.add(new_itinerary)
+        db.session.commit()
+        return redirect('/')
+    # Conditional statement - else, redirect user to homepage and flash success message
 
-# @app.route()
-# def create_itinerary():
-#     """User can create a new itinerary"""
+@app.route('/signup')
+def signup():
+    """Displays page to signup for an account."""
+    return render_template('create_user.html')
 
-#     # POST method to save itinerary info to itinerary table in db
+@app.route('/<username>/homepage')
+def signedin_homepage(username):
 
-# @app.route()
+    return render_template('portal.html', username=username)
+
+# @app.route('/search', methods=['POST'])
 # def results():
 #     """Display results page for a user's search"""
 
 #     # call a request to the Yelp API depending on keywords, filters, etc.
+#     search = request.form.get("search-bar")
+#     category = request.form.get("category")
+#     print(category)
+#     listings = crud.request_location_info(search, category)
+#     all_listings = listings.get("businesses")
+#     print(all_listings)
+    
+#     return render_template('listings.html', all_listings=all_listings)
 
-#     pass
+@app.route('/search')
+def results():
+    """Display results page for a user's search"""
 
-# # dynamic page - depending on listing!
-# @app.route()
-# def listing_page():
-#     """Displays a listing"""
+    # call a request to the Yelp API depending on keywords, filters, etc.
+    search = request.args.get("search-bar")
+    category = request.args.get("category")
+    print(category)
+    listings = crud.request_location_info(search, category)
+    all_listings = listings.get("businesses")
 
-#     # displays a listing's specific information (hours of operation, etc)
+    print(all_listings)
+    
+    return jsonify(all_listings)
 
-#     pass
+# dynamic page - depending on listing!
+@app.route('/listing/<yelp_id>')
+def listing_page(yelp_id):
+    """Displays a listing"""
 
-# @app.route()
-# def add_listing():
-#     """Allows user to add a listing to their itinerary"""
+    # displays a listing's specific information (hours of operation, etc)
+    listing_info = crud.request_listing_info(yelp_id)
+    user = crud.get_user(session.get("logged_in_user"))
+    itineraries = crud.get_itinerary(user.user_id)
+    return render_template('listing_details.html', listing_info=listing_info, itineraries=itineraries)
 
-#     # function will redirect back to listing/results page if successful
-#     # if user tries to add to itinerary twice, flash an error message
+@app.route('/create_itinerary')
+def create_itinerary_page():
+    """View form to create a new itinerary"""
 
-#     pass
+    return render_template('create_itinerary.html')
 
-# @app.route()
-# def itinerary_page():
-#     """Displays a user's full itinerary"""
+@app.route('/new_itinerary', methods=['POST'])
+def new_itinerary():
+    name = request.form.get("title")
+    user = crud.get_user(session.get("logged_in_user"))
+    new_itinerary = crud.create_itinerary(user.user_id, name)
+    db.session.add(new_itinerary)
+    db.session.commit()
 
-#     pass
+    return redirect('/')
+
+@app.route('/add_listing', methods=['POST'])
+def add_listing():
+    """Allows user to add a listing to their itinerary"""
+
+    # yelp_id = request.form.get("yelp-id")
+    # yelp_name = request.form.get("yelp-title")
+    # itinerary = request.form.get("itinerary_select")
+    # datetime = request.form.get("datetime")
+
+    # print(yelp_id)
+    # print(yelp_name)
+    # print(itinerary)
+    # print(datetime)
+
+    # new_listing = crud.create_listing(yelp_id, yelp_name)
+    # db.session.add(new_listing)
+    # db.session.commit()
+    # new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
+    # db.session.add(new_entry)
+    # db.session.commit()
+ 
+    # # function will redirect back to listing/results page if successful
+    # # if user tries to add to itinerary twice, flash an error message
+
+    # flash(f"{yelp_name} successfully added to {new_entry.itinerary.name}!")
+
+    # return redirect(f'/listing/{yelp_id}')
+
+    results = request.get_json()
+    print(results)
+
+    yelp_id = request.get_json().get("yelpId")
+    yelp_title = request.get_json().get("yelpTitle")
+    itinerary = request.get_json().get("itinerary")
+    datetime = request.get_json().get("dateTime")
+
+    new_listing = crud.create_listing(yelp_id, yelp_title)
+    db.session.add(new_listing)
+    db.session.commit()
+    new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
+    db.session.add(new_entry)
+    db.session.commit()
+
+    flash(f"{yelp_title} successfully added to {new_entry.itinerary.name}!")
+
+    return jsonify({"success": True})
+
+@app.route('/itineraries')
+def itineraries():
+    """Displays a list of all itineraries made by a user."""
+
+    user = crud.get_user(session.get("logged_in_user"))
+    itineraries = crud.get_itinerary(user.user_id)
+
+    return render_template("itineraries.html", user=user, itineraries=itineraries)
+
+@app.route('/itineraries/<itinerary_name>_<itinerary_id>')
+def itinerary_page(itinerary_name, itinerary_id):
+    """Displays itinerary details."""
+
+    session["current_itinerary"] = itinerary_id
+
+    return render_template("itinerary_details.html", itinerary_name=itinerary_name)
+    
+# @app.route('/itineraries/<itinerary_name>_<itinerary_id>/edit')
+# def edit_entry(itinerary_name, itinerary_id):
+#     """Edit entry"""
+
+#     itinerary_entries = crud.get_itinerary_details(itinerary_id)
+#     return render_template("edit_entry.html", itinerary_entries=itinerary_entries, itinerary_name=itinerary_name, itinerary_id=itinerary_id)
+
+@app.route('/itineraries/edit')
+def get_itinerary_info():
+    """Returns a JSON response with all itinerary info"""
+
+    return jsonify(crud.get_itinerary_details(session.get("current_itinerary")))
+
+@app.route('/itineraries/update', methods=["POST"])
+def update_entry_info():
+    """Updates a entry record in the database."""
+
+    entry_id = request.get_json().get("selectedEntry")
+    new_datetime = request.get_json().get("newDateTime")
+    updated_datetime = crud.update_entry_time(entry_id, new_datetime)
+    db.session.add(updated_datetime)
+    db.session.commit()
+
+    return jsonify({"success": True})
+
+@app.route('/itineraries/delete', methods=['POST'])
+def delete_entry():
+    """Deletes an entry record in the database."""
+
+    entry_id = request.get_json().get("selectedEntry")
+    del_entry = crud.delete_entry(entry_id)
+    db.session.commit()
+
+    return jsonify({"success": True})
+
+if __name__ == '__main__':
+    connect_to_db(app)
+    app.run(host="0.0.0.0", debug=True)
