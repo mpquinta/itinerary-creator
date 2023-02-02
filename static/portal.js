@@ -38,7 +38,7 @@ function displayResults(evt) {
         for (const listing of all_listings) {
             console.log(listing["name"])
             searchResults.insertAdjacentElement('beforeend', createCardAndAddToContainer(listing["id"], listing["name"], listing["categories"][0]["title"], listing["image_url"], listing["url"]))
-            // searchResults.insertAdjacentHTML('beforeend', `<li><a href="/listing/${listing["id"]}">${listing["name"]}</a></li>`);
+            document.querySelector("#search-results-container").setAttribute("class", "album py-5 bg-light")
         }
     });
 }

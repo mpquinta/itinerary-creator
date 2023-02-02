@@ -3,9 +3,11 @@
 {% block title %}{{itinerary_name}}{% endblock %}
 
 {% block body %}
-    <h1>{{itinerary_name}} by {{username}}</h1>
+<main class="container">
+    <h1>"{{itinerary_name}}" by {{username}}
     
     <button id="like" class="btn btn-success">Like</button>
+    </h1>
     <span id="total-likes"></span>
 
     <div class="card mb-3" style="max-width: 840px;" id="itinerary-list">
@@ -20,5 +22,6 @@
 
         <script src="/static/itinerary.js"></script>
     {% endif %}
+</main>
 
 {% endblock %}
