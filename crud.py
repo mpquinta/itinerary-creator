@@ -158,7 +158,7 @@ def get_itinerary_by_city_or_zipcode(**kwargs):
             "itinerary_id": itineraries_list[i].itinerary_id,
             "name": itineraries_list[i].name,
             "username": itineraries_list[i].user.username, 
-            "likes": itineraries_list[i].likes 
+            "likes": itineraries_list[i].likes
         }        
 
     return result_itineraries

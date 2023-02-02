@@ -8,10 +8,10 @@ const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => 
     cardElement.innerHTML = `
         <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
-            <h5>${title}</h5>
+            <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>
             <form action="/itineraries/${title}_${id}">
-                <button type="button" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary" value="Got to itinerary page">View</button>
             </form>
         </div>
     `;
@@ -24,11 +24,28 @@ const createCardAndAddToContainer = (id, title, author, likes) => {
     cardElement.innerHTML = `
         <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
-            <h5>${title}</h5>
+            <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>
             <form action="/itineraries/${title}_${id}">
-                <button type="button" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary" value="Got to itinerary page">View</button>
             </form>
+        </div>
+    `;
+    return cardElement
+};
+
+const createSearchResultsContainer = (id, title, author, likes) => {
+    const cardElement = document.createElement("div");
+    cardElement.setAttribute("class", "col-lg-4");
+    cardElement.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h2 class="fw-normal">${title}</h2>
+                <p>${author} | ${likes} likes</p>
+                <p>
+                    <a class="btn btn-secondary" href="/itineraries/${title}_${id}">View details</a>
+                </p>
+            </div>
         </div>
     `;
     return cardElement
@@ -42,17 +59,16 @@ fetch('/popular_itineraries')
         // call back function - update webpage with top five itineraries
         popularItinerariesContainer = document.querySelector("#popular-itineraries");
         popularItinerariesContainer.innerHTML = "";
-        popularItinerariesContainer.append(popularItineraries);
 
         for (itinerary in popularItineraries) {
-            if (itinerary === 0) {
+            if (itinerary === "0") {
                 cardElement = createActiveCarouselItemAndAddToContainer (
                     popularItineraries[itinerary].itinerary_id, 
                     popularItineraries[itinerary].name, 
                     popularItineraries[itinerary].username, 
                     popularItineraries[itinerary].likes
                 )
-                popularItinerariesContainer.append("first one");
+                popularItinerariesContainer.append(cardElement);
             } else {
                 cardElement = createCardAndAddToContainer(
                     popularItineraries[itinerary].itinerary_id, 
@@ -60,7 +76,7 @@ fetch('/popular_itineraries')
                     popularItineraries[itinerary].username, 
                     popularItineraries[itinerary].likes
                 )
-                popularItinerariesContainer.append(itinerary);  
+                popularItinerariesContainer.append(cardElement);  
             }
         }
     });
@@ -87,7 +103,7 @@ function displayResults(evt) {
              
             // loop over data - display itinerary title, author, likes, associated cities, and zipcode
             for (const itinerary in data) {
-                cardElement = createCardAndAddToContainer(
+                cardElement = createSearchResultsContainer (
                     data[itinerary].itinerary_id,
                     data[itinerary].name, 
                     data[itinerary].username, 
