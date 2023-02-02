@@ -3,100 +3,125 @@
 {% block title %}{{ listing_info.name }} - Details {% endblock %}
 
 {% block body %} 
-    <!-- <h1><a href="{{listing_info.url}}">{{ listing_info.name }}</h1></a>
-    <p>
-        {{listing_info.location.city}}, {{listing_info.location.state}} {{listing_info.location.zip_code}}
-    </p>
-    <img src="{{listing_info.image_url}}" alt="{{listing_info.name}}" style="width:500px">
 
-    <div>
-        <form action="/add_listing" method="POST">
-        <form>
-            <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
-            <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
-            <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
-            <input type="hidden" name="state" id="state" value="{{listing_info.location.state}}">
-            <input type="hidden" name="zip_code" id="zip_code" value="{{listing_info.location.zip_code}}">
-            <input type="hidden" name="image_url" id="image_url" value="{{listing_info.image_url}}">
-            <input type="hidden" name="url" id="url" value="{{listing_info.url}}">
-            <label for="itinerary_select">Choose an itinerary to add to:</label>
-            <select id="itinerary_select" name="itinerary_select">
-                {% for name in itineraries %}
-                    <option value="{{name.itinerary_id}}">{{name.name}}</option>
-                {% endfor %}
-            </select><br>
-
-            <label for="datetime">Choose a date and time:</label><br>
-            <input type="datetime-local" name="datetime" id="datetime">
-            <button type="submit" id="add-entry">Add to itinerary</button>
-        </form>
-    </div>
-    
-    <script src="/static/listing_details.js"></script> -->
-
-    <div class="row mb-3">
-        <div class="col-sm-6 col-lg-6 themed-grid-col">
-            <h1>omg why is the header hidden</h1>
-            <h1>
-            {% if listing_info.hours[0]["is_open_now"] %}
-            <span class="badge text-bg-success">Open!</span>
-            {% else %}
-            <span class="badge text-bg-danger">Closed!</span>
-            {% endif %}
-            <a href="{{listing_info.url}}">{{ listing_info.name }}</a>
-            </h1>
-
+<main class="container">
+    <div class="p-4 p-md-5 mb-1 rounded">
+        <div class="col-md-6 px-0" style="margin: auto;">
+            <h1 class="display-4 fst-italic">{{ listing_info.name }}</h1>
             <p>
                 {{ listing_info.categories[0]["title"] }}<br>
-                {{ listing_info.display_phone }} <br>
-                <!-- hours of operation / is open! closed -->
+                <img src="https://images01.nicepage.com/c461c07a441a5d220e8feb1a/adaa21d3d5de5ea6b7ca1f3d/3179068.png" alt="map marker" class="contact-icons">
+                {% for component in listing_info.location["display_address"] %}
+                    {{ component }}
+                {% endfor %}<br>
+                <img src="https://images01.nicepage.com/c461c07a441a5d220e8feb1a/56574b8ca2f05332bf847b29/864731.png" alt="cellphone icon" class="contact-icons">{{ listing_info.display_phone }} <br>
+                <img src="https://www.seekpng.com/png/detail/16-165938_png-file-web-site-icon-vector.png" alt="website icon" class="contact-icons"><a href="{{listing_info.url}}">Yelp page</a>
 
-                {% for day in listing_info.hours[0]["open"] %}
-                    <!-- {{day}} -->
-                    {% if day["day"] == 0 %}
-                        Monday | {{day["start"]}} - {{day["end"]}}<br>                   
-                    {% elif day["day"] == 1 %}
-                        Tuesday | {{day["start"]}} - {{day["end"]}} <br>                  
-                    {% elif day["day"] == 2 %}
-                        Wednesday | {{day["start"]}} - {{day["end"]}}<br>                   
-                    {% elif day["day"] == 3 %}
-                        Thursday | {{day["start"]}} - {{day["end"]}}<br>                   
-                    {% elif day["day"] == 4 %}
-                        Friday | {{day["start"]}} - {{day["end"]}}<br>                   
-                    {% elif day["day"] == 5 %}
-                        Saturday | {{day["start"]}} - {{day["end"]}}<br>                   
-                    {% elif day["day"] == 6 %}
-                        Sunday | {{day["start"]}} - {{day["end"]}}                   
-                    {% endif %}
-                {% endfor %}
-                <!-- {{ listing_info }} -->
-            </p>
-            <div>
-                <form action="/add_listing" method="POST">
-                <!-- <form> -->
-                    <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
-                    <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
-                    <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
-                    <input type="hidden" name="state" id="state" value="{{listing_info.location.state}}">
-                    <input type="hidden" name="zip_code" id="zip_code" value="{{listing_info.location.zip_code}}">
-                    <input type="hidden" name="image_url" id="image_url" value="{{listing_info.image_url}}">
-                    <input type="hidden" name="url" id="url" value="{{listing_info.url}}">
-                    <label for="itinerary_select">Choose an itinerary to add to:</label>
-                    <select id="itinerary_select" name="itinerary_select">
-                        {% for name in itineraries %}
-                            <option value="{{name.itinerary_id}}">{{name.name}}</option>
-                        {% endfor %}
-                    </select><br>
-        
-                    <label for="datetime">Choose a date and time:</label><br>
-                    <input type="datetime-local" name="datetime" id="datetime">
-                    <button type="submit" id="add-entry">Add to itinerary</button>
-                </form>
-            </div>
-            <!-- <div class="col-3 col-lg-2 themed-grid-col">left col</div>
-            <div class="col-3 col-lg-4 themed-grid-col">right col</div> -->
+            </p>           
         </div>
-        <div class="col-sm-6 col-lg-4 themed-grid-col"><img src="{{listing_info.image_url}}" alt="{{listing_info.name}}" style="width:500px"></div>
     </div>
+
+
+    <div class="row mb-2">
+        <div class="col-md-3">
+            <form action="/add_listing" method="POST" class="row gx-3 gy-2 align-items-center">
+            <!-- <form> -->
+                <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
+                <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
+                <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
+                <input type="hidden" name="state" id="state" value="{{listing_info.location.state}}">
+                <input type="hidden" name="zip_code" id="zip_code" value="{{listing_info.location.zip_code}}">
+                <input type="hidden" name="image_url" id="image_url" value="{{listing_info.image_url}}">
+                <input type="hidden" name="url" id="url" value="{{listing_info.url}}">
+                <label for="itinerary_select" >Choose an itinerary to add to:</label>
+                <select id="itinerary_select" name="itinerary_select" class="form-select">
+                    {% for name in itineraries %}
+                        <option value="{{name.itinerary_id}}">{{name.name}}</option>
+                    {% endfor %}
+                </select><br>
+    
+                <label for="datetime">Choose a date and time:</label><br>
+                <input type="datetime-local" name="datetime" id="datetime" class="form-select">
+                <button type="submit" id="add-entry" class="btn btn-primary">Add to itinerary</button>
+            </form>
+        </div>
+            
+        <div class="col-md-4 center">
+            <div class="card" style="width: 16rem; margin: auto;">
+                <div class="card-header">
+                    <strong>Hours of operation</strong>
+                    {% if listing_info.hours[0]["is_open_now"] %}
+                    <span class="badge text-bg-success">Open</span>
+                    {% else %}
+                    <span class="badge text-bg-danger">Closed</span>
+                    {% endif %}
+                </div>
+
+                {% for key in hours %}
+                    {% if key == 0 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Mon</li>
+                        <li class="list-group-item" style="width: 12rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>
+                    {% elif key == 1 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Tue</li>
+                        <li class="list-group-item" id="hours-of-operations" style="width: 12.1rem;">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>         
+                    {% elif key == 2 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Wed</li>
+                        <li class="list-group-item" style="width: 12rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>                                      
+                    {% elif key == 3 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Thu</li>
+                        <li class="list-group-item" style="width: 12rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>
+                    {% elif key == 4 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Fri</li>
+                        <li class="list-group-item" style="width: 12.6rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>                                          
+                    {% elif key == 5 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Sat</li>
+                        <li class="list-group-item" style="width: 12.3rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>                                         
+                    {% elif key == 6 %}
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item" id="hours-of-operations">Sun</li>
+                        <li class="list-group-item" style="width: 12rem;" id="hours-of-operations">{{hours[key]["start"]}} - {{hours[key]["end"]}}</li>
+                    </ul>                                           
+                    {% endif %}
+                {% endfor %}           
+              </div>
+        </div>
+
+        <div class="col-md-5">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{listing_info.photos[0]}}" alt="{{listing_info.name}}" class="listing-page-carousel-pic">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{listing_info.photos[1]}}" alt="{{listing_info.name}}" class="listing-page-carousel-pic">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{listing_info.photos[2]}}" alt="{{listing_info.name}}" class="listing-page-carousel-pic">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

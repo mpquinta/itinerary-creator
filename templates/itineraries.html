@@ -3,14 +3,19 @@
 {% block title %}{{user.username}}'s Itineraries{% endblock %}
 
 {% block body %}
-    <center><h1>{{user.username}}'s Itineraries</h1></center>
+<main class="container">
+    <div class="p-4 p-md-5 mb-1 rounded">
+        <div class="col-md-3 px-0" style="margin: auto;">
+            <h1 class="display-4">{{user.username}}'s Itineraries</h1>       
+        </div>
+    </div>
 
     <div class="row row-cols-2 row-cols-md-3 g-4">
         
         {% for itinerary in itineraries %}
         <div class="col">
             <div class="card">
-                <img src="https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1480&t=st=1663735219~exp=1663735819~hmac=dda1a1e08f9b938d171884487d58447d6506ad9082996ddb15dc4f5df0443fd0" class="card-img-top" alt="...">
+                <img src="/static/img/{{ range(1, 10) | random }}.jpeg" class="card-img-top" alt="travel">
                     <div class="card-body">
                         <h5 class="card-title"><a href="/itineraries/{{itinerary.name}}_{{itinerary.itinerary_id}}">{{itinerary.name}}</a></h5>
                             {% if itinerary.itinerary_entries != [] %}
@@ -24,5 +29,6 @@
         </div>
         {% endfor %}
     </div>
+</main>
     
 {% endblock %}

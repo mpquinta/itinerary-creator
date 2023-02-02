@@ -6,25 +6,23 @@
         <title>
             {% block title %}{% endblock %}
         </title>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
 
         {% block head %}{% endblock %}
 
-        <!-- bootstrap's CSS  -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <link rel="stylesheet" href="/static/css/mystyles.css">
-    </head>
-    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                {% for message in messages %}
+                    <div>
+                      {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% if session.get("logged_in_user") %}
-        <nav class="navbar navbar-expand-lg fixed-top bg-light">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="/">Itinerary Creator</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +40,12 @@
           </div>
         </nav>
         {% endif %}
+
+        <!-- bootstrap's CSS  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/mystyles.css">
+    </head>
+    <body>
         {% block body %}{% endblock %}
 
         <!-- bootstrap's JS -->

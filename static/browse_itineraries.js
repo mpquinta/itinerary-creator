@@ -4,9 +4,9 @@
 const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => {
     const cardElement = document.createElement("div");
     cardElement.setAttribute("class", "carousel-item active");
-    // cardElement.classList.add("carousel-item");
+    let randomNum = Math.floor((Math.random() * 10) + 1);
     cardElement.innerHTML = `
-        <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
+        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel">
         <div class="carousel-caption d-none d-md-block">
             <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>
@@ -21,8 +21,9 @@ const createActiveCarouselItemAndAddToContainer = (id, title, author, likes) => 
 const createCardAndAddToContainer = (id, title, author, likes) => {
     const cardElement = document.createElement("div");
     cardElement.classList.add("carousel-item");
+    let randomNum = Math.floor((Math.random() * 10) + 1);
     cardElement.innerHTML = `
-        <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="...">
+        <img src="/static/img/${randomNum}.jpeg" class="d-block w-100" alt="travel">
         <div class="carousel-caption d-none d-md-block">
             <h1>${title}</h1>
             <p>${author} | Total likes: ${likes}</p>
