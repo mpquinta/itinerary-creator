@@ -6,9 +6,8 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
  - [Technologies Used](#technologies-used)
  - [Features](#features)
  - [Installation](#installation)
- - [Structure](#structure)
  - [Preview](#preview)
- - Improvement
+ - [Improvements](#improvements)
 
  # Technologies Used
 - Python
@@ -42,13 +41,13 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
 6. Create and add API key to secrets.sh file `export YELP_API_KEY=[API KEY]`
 7. Run secrets.sh file `source secrets.sh`
 
-# Improvements
-I plan on continuing to customize the application to include more features that will further streamline trip planning. 
-
-Weather forecasting - Include weather information for selected date. This information can dictate what the user would like to do for the day - for example, if it was raining on a particular day, the user might decide to save outside activities for another day.
-
-# Screenshots
+# Preview
 [![user-homepage.png](https://i.postimg.cc/hvjMKCGT/user-homepage.png)](https://postimg.cc/1nkDHrw3)
 [![listing-page.png](https://i.postimg.cc/0jBnjp63/listing-page.png)](https://postimg.cc/K3tBs3Dr)
 [![edit-itinerary.png](https://i.postimg.cc/vBX3FRGG/edit-itinerary.png)](https://postimg.cc/wyyhLGtr)
 [![browse-existing-itineraries.png](https://i.postimg.cc/ZqmSNYnF/browse-existing-itineraries.png)](https://postimg.cc/68MgJXdy)
+
+# Improvements
+I plan on continuing to customize the application to include more features that will further streamline trip planning. 
+
+Weather forecasting - Include weather information for selected date. This information can dictate what the user would like to do for the day - for example, if it was raining on a particular day, the user might decide to save outside activities for another day.
