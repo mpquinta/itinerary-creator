@@ -4,10 +4,19 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
 
 # Table of Contents
  - [Technologies Used] (#technologies-used)
- - Features
+ - [Features] (#features)
  - Structure
  - Screenshots
  - Improvement
+
+#Features
+ - User account creation
+ - User login
+ - Search restaurant and activities by location
+ - Create an itinerary
+ - Add restaurant and activities to itinerary by appointment
+ - Edit date and time of given activity within an itinerary
+ - View top-rated itineraries
 
  # Technologies Used
 - Python
