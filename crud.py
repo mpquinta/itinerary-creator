@@ -63,7 +63,7 @@ def request_listing_info(yelp_id):
 
     return yelp_data
 
-def request_location_info(location, **kwargs):
+def request_location_info(location):
 
     ENDPOINT = "https://api.yelp.com/v3/businesses/search"
     # CATEGORIES = ["food", "local flavor", "tours", "shopping", "parks"]
@@ -72,7 +72,6 @@ def request_location_info(location, **kwargs):
         "category": "food,local flavor,tours,shopping,parks",
         "radius": 40000, 
         "limit": 50,
-        "offset": kwargs.get("offset")
     }
     response = requests.get(url=ENDPOINT, headers=HEADERS, params=params)
     yelp_data = response.json()

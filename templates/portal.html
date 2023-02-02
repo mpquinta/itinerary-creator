@@ -4,22 +4,34 @@
 
 {% block body %}
 
-    <h2>Start searching for places to add to your itinerary!</h2>
-
-    <!-- <form action="/search" method="POST"> -->
-    <form>
-        <label for="search-bar">Enter city or zipcode to where you're traveling to!</label><br>
-        <input type="text" name="search-bar" id="search-bar"><br>
-        <!-- <label for="category">Choose a category:</label><br>
-        <select id="category" name="category">
-            <option value="food">Food</option>
-            <option value="local flavor">Local Attractions</option>
-        </select> -->
-        
-        <button type="submit" id="search">Search</button>
-    </form>
-
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h2 class="fw-light">Start searching!</h2>
+                <p>
+                    <form>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="search-bar" id="search-bar" placeholder="Enter city or zipcode">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Search</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+        </div>
+    
+    <!-- section for search results  -->
+    <div class="album py-5 bg-light" id="search-results">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
+                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
+                <img src="https://squeaksandnibbles.com/wp-content/uploads/2018/04/black-and-white-rabbit.jpg" class="bd-placeholder-img card-img-top" width="245" height="228">
+            </div>
+        </div>
+    </div>
     <ul id="search-results"></ul>
-
+    </center>
     <script src="/static/portal.js"></script>
 {% endblock %}

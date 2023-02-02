@@ -60,7 +60,8 @@ def create_acc():
     
     # Conditional statement - if username and/or email matches a record in the db, throw error
     if crud.user_exists(email):
-        print("Sorry, a user with that email already exists.")
+        flash("Sorry, a user with that email already exists.")
+        return redirect('/signup')
     else:
         new_user = crud.create_user(fname, lname, email, username, password)
         db.session.add(new_user)
@@ -68,6 +69,7 @@ def create_acc():
         new_itinerary = crud.create_itinerary(new_user.user_id, "Favorites")
         db.session.add(new_itinerary)
         db.session.commit()
+        flash("Account was successfully made! Try loggin in.")
         return redirect('/')
     # Conditional statement - else, redirect user to homepage and flash success message
 
@@ -101,9 +103,7 @@ def results():
 
     # call a request to the Yelp API depending on keywords, filters, etc.
     search = request.args.get("search-bar")
-    offset = request.args.get("offset")
-    print("offset value: ", offset)
-    listings = crud.request_location_info(search, offset=offset)
+    listings = crud.request_location_info(search)
     all_listings = listings.get("businesses")
 
     return jsonify(all_listings)
