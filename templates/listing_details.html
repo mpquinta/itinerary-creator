@@ -3,7 +3,7 @@
 {% block title %}{{ listing_info.name }} - Details {% endblock %}
 
 {% block body %} 
-    <h1><a href="{{listing_info.url}}">{{ listing_info.name }}</h1></a>
+    <!-- <h1><a href="{{listing_info.url}}">{{ listing_info.name }}</h1></a>
     <p>
         {{listing_info.location.city}}, {{listing_info.location.state}} {{listing_info.location.zip_code}}
     </p>
@@ -11,7 +11,7 @@
 
     <div>
         <form action="/add_listing" method="POST">
-        <!-- <form> -->
+        <form>
             <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
             <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
             <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
@@ -32,5 +32,71 @@
         </form>
     </div>
     
-    <!-- <script src="/static/listing_details.js"></script> -->
+    <script src="/static/listing_details.js"></script> -->
+
+    <div class="row mb-3">
+        <div class="col-sm-6 col-lg-6 themed-grid-col">
+            <h1>omg why is the header hidden</h1>
+            <h1>
+            {% if listing_info.hours[0]["is_open_now"] %}
+            <span class="badge text-bg-success">Open!</span>
+            {% else %}
+            <span class="badge text-bg-danger">Closed!</span>
+            {% endif %}
+            <a href="{{listing_info.url}}">{{ listing_info.name }}</a>
+            </h1>
+
+            <p>
+                {{ listing_info.categories[0]["title"] }}<br>
+                {{ listing_info.display_phone }} <br>
+                <!-- hours of operation / is open! closed -->
+
+                {% for day in listing_info.hours[0]["open"] %}
+                    <!-- {{day}} -->
+                    {% if day["day"] == 0 %}
+                        Monday | {{day["start"]}} - {{day["end"]}}<br>                   
+                    {% elif day["day"] == 1 %}
+                        Tuesday | {{day["start"]}} - {{day["end"]}} <br>                  
+                    {% elif day["day"] == 2 %}
+                        Wednesday | {{day["start"]}} - {{day["end"]}}<br>                   
+                    {% elif day["day"] == 3 %}
+                        Thursday | {{day["start"]}} - {{day["end"]}}<br>                   
+                    {% elif day["day"] == 4 %}
+                        Friday | {{day["start"]}} - {{day["end"]}}<br>                   
+                    {% elif day["day"] == 5 %}
+                        Saturday | {{day["start"]}} - {{day["end"]}}<br>                   
+                    {% elif day["day"] == 6 %}
+                        Sunday | {{day["start"]}} - {{day["end"]}}                   
+                    {% endif %}
+                {% endfor %}
+                <!-- {{ listing_info }} -->
+            </p>
+            <div>
+                <form action="/add_listing" method="POST">
+                <!-- <form> -->
+                    <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
+                    <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
+                    <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
+                    <input type="hidden" name="state" id="state" value="{{listing_info.location.state}}">
+                    <input type="hidden" name="zip_code" id="zip_code" value="{{listing_info.location.zip_code}}">
+                    <input type="hidden" name="image_url" id="image_url" value="{{listing_info.image_url}}">
+                    <input type="hidden" name="url" id="url" value="{{listing_info.url}}">
+                    <label for="itinerary_select">Choose an itinerary to add to:</label>
+                    <select id="itinerary_select" name="itinerary_select">
+                        {% for name in itineraries %}
+                            <option value="{{name.itinerary_id}}">{{name.name}}</option>
+                        {% endfor %}
+                    </select><br>
+        
+                    <label for="datetime">Choose a date and time:</label><br>
+                    <input type="datetime-local" name="datetime" id="datetime">
+                    <button type="submit" id="add-entry">Add to itinerary</button>
+                </form>
+            </div>
+            <!-- <div class="col-3 col-lg-2 themed-grid-col">left col</div>
+            <div class="col-3 col-lg-4 themed-grid-col">right col</div> -->
+        </div>
+        <div class="col-sm-6 col-lg-4 themed-grid-col"><img src="{{listing_info.image_url}}" alt="{{listing_info.name}}" style="width:500px"></div>
+    </div>
+
 {% endblock %}
