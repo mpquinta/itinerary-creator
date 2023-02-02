@@ -83,6 +83,12 @@ def get_user(username):
     user = User.query.filter_by(username=username).first()
     return user
 
+def get_user_by_itinerary_id(itinerary_id):
+
+    itinerary = Itinerary.query.filter_by(itinerary_id=itinerary_id).first()
+    user = itinerary.user.username
+    return user
+
 def get_itinerary(user_id):
     
     itineraries = Itinerary.query.filter_by(user_id=user_id).all()
@@ -97,7 +103,8 @@ def get_itinerary_details(itinerary_id):
         entries[i] = {
             "title": query_entries[i].listing.title,
             "id": query_entries[i].itinerary_entry_id,
-            "datetime": query_entries[i].scheduled_day
+            "datetime": query_entries[i].scheduled_day,
+            "username": query_entries[i].itinerary.user.username
         }
     
     return entries

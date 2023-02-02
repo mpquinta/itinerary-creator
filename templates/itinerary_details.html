@@ -3,16 +3,19 @@
 {% block title %}{{itinerary_name}}{% endblock %}
 
 {% block body %}
-    <h1>{{itinerary_name}} by {{session.get("logged_in_user")}}</h1>
+    <h1>{{itinerary_name}} by {{username}}</h1>
     <p id="total-likes"></p>
     <button id="like">Like</button>
 
     <div id="itinerary-list">
         <!-- <ul id="itinerary-list"></ul> -->
     </div>
-    <button id="edit">Edit Itinerary</button>
-        
-    <div id="edit-fields"></div>
+    
+    {% if session.get("logged_in_user") == username %}
+        <button id="edit">Edit Itinerary</button>
+
+        <div id="edit-fields"></div>
+    {% endif %}
     
     <script src="/static/itinerary.js"></script>
 {% endblock %}
