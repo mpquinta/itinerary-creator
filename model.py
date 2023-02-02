@@ -39,7 +39,7 @@ class Listing(db.Model):
     # itinerary_entries = a list of Entry objects
 
     def __repr__(self):
-        return f'<{self.title} category={self.activity_type} listing_id={self.listing_id} yelp_id={self.yelp_id}>'
+        return f'<{self.title} listing_id={self.listing_id} yelp_id={self.yelp_id}>'
 
 class Entry(db.Model):
     """An itinerary entry"""
