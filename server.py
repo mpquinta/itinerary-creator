@@ -248,6 +248,18 @@ def increase_likes():
     
     return jsonify(total_num_likes)
 
+@app.route('/decrease_likes', methods=['POST'])
+def decrease_likes():
+    """Decreases like count for a particular itinerary."""
+
+    # call crud function that increases like count
+    new_num_likes = crud.decrease_like_count(session.get("current_itinerary"))
+    total_num_likes = new_num_likes.likes
+    db.session.add(new_num_likes)
+    db.session.commit()
+    
+    return jsonify(total_num_likes)
+
 @app.route('/browse_itineraries')
 def display_all_itineraries():
     """Webpage that allows a user to see all itineraries on website."""

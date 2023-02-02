@@ -129,11 +129,13 @@ def increase_like_count(itinerary_id):
     # return the number
     return likes
 
-def decrease_like_count():
-    # query to get how many likes a given itinerary has 
-    # subtract 1 to it
+def decrease_like_count(itinerary_id):
+    # query to get how many likes a given itinerary has
+    likes = Itinerary.query.filter_by(itinerary_id=itinerary_id).first() 
+    current_num_likes = likes.likes
+    likes.likes = current_num_likes - 1 
     # return the number
-    pass
+    return likes
 
 def get_itinerary_by_city_or_zipcode(**kwargs):
     if kwargs.get("city"):
