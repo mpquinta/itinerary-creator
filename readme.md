@@ -31,6 +31,7 @@ Biyahe is a tool that helps users plan for their next trip! The app uses Yelp as
  - Add restaurant and activities to itinerary by appointment
  - Edit date and time of given activity within an itinerary
  - View top-rated itineraries
+ - Users can vote on their favorite itinerary
 
 # Installation
 1. Get a free API Key at https://fusion.yelp.com/
