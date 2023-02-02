@@ -34,8 +34,8 @@ def login_info_matches(username, password):
     else:
         return False
 
-def create_listing(yelp_id, title):
-    new_listing = Listing(yelp_id=yelp_id, title=title)
+def create_listing(yelp_id, title, city, state, zipcode, photo_url, yelp_url):
+    new_listing = Listing(yelp_id=yelp_id, title=title, city=city, state=state, zipcode=zipcode, photo_url=photo_url, yelp_url=yelp_url)
 
     return new_listing
 

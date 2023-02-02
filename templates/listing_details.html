@@ -4,13 +4,21 @@
 
 {% block body %} 
     <h1><a href="{{listing_info.url}}">{{ listing_info.name }}</h1></a>
-    <img src="{{listing_info.image_url}}">
+    <p>
+        {{listing_info.location.city}}, {{listing_info.location.state}} {{listing_info.location.zip_code}}
+    </p>
+    <img src="{{listing_info.image_url}}" alt="{{listing_info.name}}" style="width:500px">
 
     <div>
         <!-- <form action="/add_listing" method="POST"> -->
         <form>
             <input type="hidden" name="yelp-id" id="yelp-id" value="{{listing_info.id}}">
             <input type="hidden" name="yelp-title" id="yelp-title" value="{{listing_info.name}}">
+            <input type="hidden" name="city" id="city" value="{{listing_info.location.city}}">
+            <input type="hidden" name="state" id="state" value="{{listing_info.location.state}}">
+            <input type="hidden" name="zip_code" id="zip_code" value="{{listing_info.location.zip_code}}">
+            <input type="hidden" name="image_url" id="image_url" value="{{listing_info.image_url}}">
+            <input type="hidden" name="url" id="url" value="{{listing_info.url}}">
             <label for="itinerary_select">Choose an itinerary to add to:</label>
             <select id="itinerary_select" name="itinerary_select">
                 {% for name in itineraries %}

@@ -35,12 +35,17 @@ def create_data_by_cat(category):
 
     yelp_data_in_db = []
     for listing in yelp_data["businesses"]:
-        yelp_id, title = (
+        yelp_id, title, city, state, zipcode, photo_url, yelp_url = (
             listing["id"],
-            listing["name"]
+            listing["name"],
+            listing["location"]["city"],
+            listing["location"]["state"],
+            listing["location"]["zip_code"],
+            listing["image_url"],
+            listing["url"]
         )
 
-        db_listing = crud.create_listing(yelp_id, title)
+        db_listing = crud.create_listing(yelp_id, title, city, state, zipcode, photo_url, yelp_url)
         yelp_data_in_db.append(db_listing)
 
     model.db.session.add_all(yelp_data_in_db)
@@ -63,7 +68,7 @@ for i in range(1, 4):
     users_in_db.append(new_user)
 
     for j in range(1, 6):
-        new_itinerary = crud.create_itinerary(i)
+        new_itinerary = crud.create_itinerary(i, "Favorites")
         itineraries_in_db.append(new_itinerary)
 
         new_itinerary_entry = crud.create_entry(j, randint(1, 25), f"2022-08-04 {j}:00")

@@ -1,6 +1,7 @@
 """Server for itinerary app."""
 
 import json
+from turtle import title
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud
@@ -137,46 +138,51 @@ def new_itinerary():
 def add_listing():
     """Allows user to add a listing to their itinerary"""
 
-    # yelp_id = request.form.get("yelp-id")
-    # yelp_name = request.form.get("yelp-title")
-    # itinerary = request.form.get("itinerary_select")
-    # datetime = request.form.get("datetime")
+    yelp_id = request.form.get("yelp-id")
+    title = request.form.get("yelp-title")
+    city = request.form.get("city")
+    state = request.form.get("state")
+    zipcode = request.form.get("zip_code")
+    photo_url = request.form.get("image_url")
+    yelp_url = request.form.get("url")
+    itinerary = request.form.get("itinerary_select")
+    datetime = request.form.get("datetime")
 
-    # print(yelp_id)
-    # print(yelp_name)
-    # print(itinerary)
-    # print(datetime)
-
-    # new_listing = crud.create_listing(yelp_id, yelp_name)
-    # db.session.add(new_listing)
-    # db.session.commit()
-    # new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
-    # db.session.add(new_entry)
-    # db.session.commit()
- 
-    # # function will redirect back to listing/results page if successful
-    # # if user tries to add to itinerary twice, flash an error message
-
-    # flash(f"{yelp_name} successfully added to {new_entry.itinerary.name}!")
-
-    # return redirect(f'/listing/{yelp_id}')
-
-    results = request.get_json()
-    print(results)
-
-    yelp_id = request.get_json().get("yelpId")
-    yelp_title = request.get_json().get("yelpTitle")
-    itinerary = request.get_json().get("itinerary")
-    datetime = request.get_json().get("dateTime")
-
-    new_listing = crud.create_listing(yelp_id, yelp_title)
+    new_listing = crud.create_listing(yelp_id, title, city, state, zipcode, photo_url, yelp_url)
     db.session.add(new_listing)
     db.session.commit()
     new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
     db.session.add(new_entry)
     db.session.commit()
+ 
+    # function will redirect back to listing/results page if successful
+    # if user tries to add to itinerary twice, flash an error message
 
-    flash(f"{yelp_title} successfully added to {new_entry.itinerary.name}!")
+    flash(f"{title} successfully added to {new_entry.itinerary.name}!")
+
+    return redirect(f'/listing/{yelp_id}')
+
+    # results = request.get_json()
+    # print(results)
+
+    # yelp_id = request.get_json().get("yelpId")
+    # title = request.get_json().get("yelpTitle")
+    # city = request.get_json().get("city")
+    # state = request.get_json().get("state")
+    # zipcode = request.get_json().get("zipcode")
+    # photo_url = request.get_json().get("imageUrl")
+    # yelp_url = request.get_json().get("url")
+    # itinerary = request.get_json().get("itinerary")
+    # datetime = request.get_json().get("dateTime")
+
+    # new_listing = crud.create_listing(yelp_id, title, city, state, zipcode, photo_url, yelp_url)
+    # db.session.add(new_listing)
+    # db.session.commit()
+    # new_entry = crud.create_entry(itinerary, new_listing.listing_id, datetime)
+    # db.session.add(new_entry)
+    # db.session.commit()
+
+    flash(f"{title} successfully added to {new_entry.itinerary.name}!")
 
     return jsonify({"success": True})
 
