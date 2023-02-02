@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}{{user.fname}}'s Itineraries{% endblock %}
+{% block title %}{{user.username}}'s Itineraries{% endblock %}
 
 {% block body %}
-    <div>
-        <ul>
-            {% for itinerary in itineraries %}
-                <li>
-                    <a href="/itineraries/{{itinerary.name}}_{{itinerary.itinerary_id}}">{{itinerary.name}}</a>
-                </li>
+    <center><h1>{{user.username}}'s Itineraries</h1></center>
 
-            {% endfor %}
-        </ul>
+    <div class="row row-cols-2 row-cols-md-3 g-4">
+        
+        {% for itinerary in itineraries %}
+        <div class="col">
+            <div class="card">
+                <img src="https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1480&t=st=1663735219~exp=1663735819~hmac=dda1a1e08f9b938d171884487d58447d6506ad9082996ddb15dc4f5df0443fd0" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/itineraries/{{itinerary.name}}_{{itinerary.itinerary_id}}">{{itinerary.name}}</a></h5>
+                            {% if itinerary.itinerary_entries != [] %}
+                                <p class="card-text">{{itinerary.itinerary_entries[0].scheduled_day.strftime("%m/%d/%Y")}} - {{itinerary.itinerary_entries[-1].scheduled_day.strftime("%m/%d/%Y")}}</p>
+                            {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ itinerary.itinerary_entries|length }} entries - {{itinerary.likes}} likes</small>
+                    </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
+    
 {% endblock %}
