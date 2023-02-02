@@ -36,3 +36,4 @@ function addItineraryEntry(evt){
 }
 
 addEntry.addEventListener('click', addItineraryEntry);
+

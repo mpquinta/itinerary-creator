@@ -6,10 +6,11 @@ function getItineraryData() {
         .then((response) => response.json())
         .then((data) => {
             
-            // return data
-            console.log(data)
-            insertItineraryData(data)
-            // createDropDownFields(data)
+            for (const current_entry in response) {
+                const id = data[current_entry]["id"];
+                const title = data[current_entry]["title"];
+                const datetime = data[current_entry]["datetime"];
+            }
         });
 }
 
@@ -130,7 +131,7 @@ function editItinerary(evt) {
             createDropDownFields(data)
         });
     // getItineraryData () => returns itinerary data
-
+    
     
 }
 editBtn.addEventListener('click', editItinerary);
@@ -141,15 +142,9 @@ function increaseLikeCount(evt) {
     evt.preventDefault();
     
     // send request to server to update itinerary's like count (send over itinerary id)
-    fetch('/increase_likes', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
+    fetch('/increase_likes')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             const totalLikesContainer = document.querySelector("#total-likes");
             totalLikesContainer.innerHTML = `${data} likes`;
         })
