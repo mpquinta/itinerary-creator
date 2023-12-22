@@ -84,7 +84,12 @@ class Deal(db.Model):
     city_fr_iata = db.Column(db.String)
     city_to = db.Column(db.String)
     city_to_iata = db.Column(db.String)
-    desired_price = db.Column(db.Integer)    
+    desired_price = db.Column(db.Integer)
+
+    user = db.relationship("User", backref="flight_deals")
+
+    def __repr__(self):
+        return f'<author={self.user_id} | flight from={self.city_fr}> | flight to={self.city_to} | desired price={self.desired_price}'
 
 def connect_to_db(flask_app, db_uri="postgresql:///itineraries", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
