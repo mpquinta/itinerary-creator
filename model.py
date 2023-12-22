@@ -73,6 +73,19 @@ class Itinerary(db.Model):
     def __repr__(self):
         return f'<author={self.user_id} | itinerary_id={self.itinerary_id}>'
 
+class Deal(db.Model):
+    """Stores origin city, destination city, and the desired price for flight"""
+
+    __tablename__ = "flight_deals"
+
+    flight_deal_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    city_fr = db.Column(db.String)
+    city_fr_iata = db.Column(db.String)
+    city_to = db.Column(db.String)
+    city_to_iata = db.Column(db.String)
+    desired_price = db.Column(db.Integer)    
+
 def connect_to_db(flask_app, db_uri="postgresql:///itineraries", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
