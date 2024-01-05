@@ -19,10 +19,10 @@
                             <input type="text" class="form-control" name="city_from" id="city_from" placeholder="Enter origin city">
                         </div>
                         <div class="col-auto">
-                            <input type="text" class="form-control" name="city-to" id="city-to" placeholder="Enter destination city">
+                            <input type="text" class="form-control" name="city_to" id="city_to" placeholder="Enter destination city">
                         </div>
                         <div class="col-auto">
-                            <input type="text" class="form-control" name="desired-price" id="desired-price" placeholder="Desired price">
+                            <input type="text" class="form-control" name="desired_price" id="desired_price" placeholder="Desired price">
                         </div>
                         <div class="col-auto">
                             <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Track Flights</button>
@@ -34,29 +34,14 @@
     </section>
 
 
-    <!-- <form>
-        <label for="search-bar">Enter city or zipcode:</label>
-        <input type="text" name="search-location" id="search-location">
-        <button type="submit" id="search">Search</button>
-    </form> -->
+    <!-- section for search results  -->
+    <div id="search-results-container">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="search-results">
 
-    <div id="top-rated"></div>
-
-    <div class="container marketing">
-        <div class="row" id="search-results">
-            <!-- start loop here -->
-            <!-- <div class="col-lg-4">
-                <img src="...">
-                <h2 class="fw-normal">Heading</h2>
-                <p>"Some representative placeholder..."</p>
-                <p>
-                    <a class="btn btn-secondary" href="#">View details</a>
-                </p>
-            </div> -->
-            <!-- end loop here -->
-
+            </div>
         </div>
     </div>
 
-    <script src="/static/browse_itineraries.js"></script>
+    <script src="/static/flight_deals.js"></script>
 {% endblock %}

@@ -288,9 +288,12 @@ def flight_deals():
 @app.route('/track_flight')
 def track_flight():
     """Save user input for flight criteria into data base"""
-    #get user input on forms 
+    #get user input from JS file 
     city_from = request.args.get("city_from")
+    city_to = request.args.get("city_to")
+    desired_price = request.args.get("desired_price")
     print(city_from)
+    
     # use function to find IATA codes for city origin and city destination
 
     # save into database
