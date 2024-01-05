@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Itineraries{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/carousel.css">
+{% endblock %}
+
+{% block body %}
+    <!-- flights search bar -->
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <img src="/static/img/search-flight-deals.png" alt="search flight deals header">
+
+                <p>
+                    <form>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="city_from" id="city_from" placeholder="Enter origin city">
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="city-to" id="city-to" placeholder="Enter destination city">
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="desired-price" id="desired-price" placeholder="Desired price">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Track Flights</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <form>
+        <label for="search-bar">Enter city or zipcode:</label>
+        <input type="text" name="search-location" id="search-location">
+        <button type="submit" id="search">Search</button>
+    </form> -->
+
+    <div id="top-rated"></div>
+
+    <div class="container marketing">
+        <div class="row" id="search-results">
+            <!-- start loop here -->
+            <!-- <div class="col-lg-4">
+                <img src="...">
+                <h2 class="fw-normal">Heading</h2>
+                <p>"Some representative placeholder..."</p>
+                <p>
+                    <a class="btn btn-secondary" href="#">View details</a>
+                </p>
+            </div> -->
+            <!-- end loop here -->
+
+        </div>
+    </div>
+
+    <script src="/static/browse_itineraries.js"></script>
+{% endblock %}

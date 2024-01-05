@@ -279,6 +279,24 @@ def return_popular_itineraries():
 
     return jsonify(crud.get_popular_itineraries())
 
+@app.route('/flight_deals')
+def flight_deals():
+    """Page where user can enter criteria for flights deals they want to track."""
+
+    return render_template('/flight_deals.html')
+
+@app.route('/track_flight')
+def track_flight():
+    """Save user input for flight criteria into data base"""
+    #get user input on forms 
+    city_from = request.args.get("city_from")
+    print(city_from)
+    # use function to find IATA codes for city origin and city destination
+
+    # save into database
+
+    # run function automatically to see if there is a flight that matches criteria
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run()

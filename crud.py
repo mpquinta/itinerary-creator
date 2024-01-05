@@ -7,6 +7,7 @@ import requests
 from model import db, User, Listing, Entry, Itinerary, connect_to_db
 
 API_KEY = os.environ["YELP_API_KEY"]
+TEQUILA_KIWI_API_KEY = os.environ["TEQUILA_KIWI_API_KEY"]
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
 def create_user(fname, lname, email, username, password):
@@ -177,6 +178,40 @@ def get_popular_itineraries():
             "likes": itineraries[i].likes
         }
     return result_itineraries
+
+def search_iata_code(self, city):
+    query_endpoint = "https://api.tequila.kiwi.com/locations/query"
+
+    params = {
+        "term": city
+    }
+
+    get_response = requests.get(url=query_endpoint, headers=self.headers, params=params)
+    city_info = get_response.json()
+
+    return city_info["locations"][0]["code"]
+
+def flight_search(self, iata_code, stop_overs):
+    search_endpoint = "https://api.tequila.kiwi.com/v2/search"
+
+    params = {
+        "fly_from": "SFO",
+        "fly_to": iata_code,
+        "date_from": (datetime.now() + timedelta(days=1)).strftime("%d/%m/%Y"),
+        "date_to": (datetime.now() + timedelta(days=181)).strftime("%d/%m/%Y"),
+        "nights_in_dst_from": 7,
+        "nights_in_dst_to": 30,
+        "flight_type": "round",
+        "one_for_city": 1,
+        "max_stopovers": stop_overs,
+        "curr": "USD",
+
+    }
+
+    response = requests.get(url=search_endpoint, headers=self.headers, params=params)
+    result = response.json()
+
+    return result
         
 
 if __name__ == '__main__':
