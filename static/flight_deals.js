@@ -10,24 +10,19 @@ function displayResults(evt) {
     const city_to = document.querySelector('#city_to').value;
     const desired_price = document.querySelector('#desired_price').value;   
 
-    const url = `/flight_deals?city_from=${city_from}&city_to=${city_to}&desired_price=${desired_price}`
+    // const url = `/flight_deals?city_from=${city_from}&city_to=${city_to}&desired_price=${desired_price}`
 
-    fetch(url)
-    .then((response) => response.json())
-    .then((all_listings) => {
-        let searchResults = document.querySelector('#search-results');
-        let searchBtns = document.querySelector('#next_prev');
-        searchResults.innerHTML = "";
-
-        for (const listing of all_listings) {
-            searchResults.insertAdjacentElement('beforeend', createCardAndAddToContainer(listing["id"], listing["name"], listing["categories"][0]["title"], listing["image_url"], listing["url"]))
-            document.querySelector("#search-results-container").setAttribute("class", "album py-5 bg-light")
-        }
-
-        // add "next" button
-        searchBtns.appendChild('beforeend', createBtn());
-        
-
-    });
+    // send to server
+    fetch("/track_flight", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({city_from, city_to, desired_price}),
+    })
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+            // display results message on page or "Sorry, there are no flights right now that fit the criteria. We'll send you a message if one shows up!"
+        });
 }
 searchBtn.addEventListener('click', displayResults);

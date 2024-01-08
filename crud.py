@@ -4,7 +4,8 @@ import os
 import json
 from unittest import result
 import requests
-from model import db, User, Listing, Entry, Itinerary, connect_to_db
+from model import db, User, Listing, Entry, Itinerary, Deal, connect_to_db
+from datetime import datetime, timedelta
 
 API_KEY = os.environ["YELP_API_KEY"]
 TEQUILA_KIWI_API_KEY = os.environ["TEQUILA_KIWI_API_KEY"]
@@ -179,17 +180,26 @@ def get_popular_itineraries():
         }
     return result_itineraries
 
-def search_iata_code(self, city):
+def search_iata_code(city):
     query_endpoint = "https://api.tequila.kiwi.com/locations/query"
 
+    headers = {
+        "apikey": os.environ["TEQUILA_KIWI_API_KEY"]
+    }
+    
     params = {
         "term": city
     }
 
-    get_response = requests.get(url=query_endpoint, headers=self.headers, params=params)
+    get_response = requests.get(url=query_endpoint, headers=headers, params=params)
     city_info = get_response.json()
 
     return city_info["locations"][0]["code"]
+
+def flight_deal_search(current_user_id, city_from, city_from_iata, city_to, city_to_iata, desired_price):
+    new_entry = Deal(user_id=current_user_id, city_fr=city_from, city_fr_iata=city_from_iata, city_to=city_to, city_to_iata=city_to_iata, desired_price=desired_price)
+
+    return new_entry
 
 def flight_search(self, iata_code, stop_overs):
     search_endpoint = "https://api.tequila.kiwi.com/v2/search"

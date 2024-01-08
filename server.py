@@ -285,21 +285,31 @@ def flight_deals():
 
     return render_template('/flight_deals.html')
 
-@app.route('/track_flight')
+@app.route('/track_flight', methods=["POST"])
 def track_flight():
     """Save user input for flight criteria into data base"""
-    #get user input from JS file 
-    city_from = request.args.get("city_from")
-    city_to = request.args.get("city_to")
-    desired_price = request.args.get("desired_price")
+    
+    # get user input from JS file and use function to find IATA codes for city origin and city destination
+    # city_from = crud.search_iata_code(request.args.get("city_from"))
+    # city_to = crud.search_iata_code(request.args.get("city_to"))
+    # desired_price = request.args.get("desired_price")
+    city_from = request.get_json().get("city_from")
+    city_from_iata = crud.search_iata_code(request.get_json().get("city_from"))
+    city_to = request.get_json().get("city_to")
+    city_to_iata = crud.search_iata_code(request.get_json().get("city_to"))
+    desired_price = int(request.get_json().get("desired_price"))
+    user = crud.get_user(session.get("logged_in_user"))
+
     print(city_from)
     
-    # use function to find IATA codes for city origin and city destination
-
     # save into database
+    deal_entry = crud.flight_deal_search(user.user_id, city_from, city_from_iata, city_to, city_to_iata, desired_price)
+    db.session.add(deal_entry)
+    db.session.commit()
 
     # run function automatically to see if there is a flight that matches criteria
-
+    return "it worked!"
+    
 if __name__ == '__main__':
     connect_to_db(app)
     app.run()
