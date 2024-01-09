@@ -23,6 +23,7 @@ function displayResults(evt) {
         .then((response) => response.json())
         .then((jsonResponse) => {
             // display results message on page or "Sorry, there are no flights right now that fit the criteria. We'll send you a message if one shows up!"
+            console.log(jsonResponse)
         });
 }
 searchBtn.addEventListener('click', displayResults);

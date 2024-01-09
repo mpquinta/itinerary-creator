@@ -308,7 +308,67 @@ def track_flight():
     db.session.commit()
 
     # run function automatically to see if there is a flight that matches criteria
-    return "it worked!"
+    flight_search_results = crud.flight_search(city_from_iata, city_to_iata, 0)
+
+    # if there's a flight that is less or equal to the desired price, than return the price
+    try:
+        #extract necessary info from the flight search results 
+        from_city = flight_search_results["data"][0]["route"][0]["cityFrom"]
+        from_iata = flight_search_results["data"][0]["route"][0]["flyFrom"]
+        to_city = flight_search_results["data"][0]["route"][0]["cityTo"]
+        to_iata = flight_search_results["data"][0]["route"][0]["flyTo"]
+        start_date_raw = flight_search_results["data"][0]["route"][0]["local_departure"].split("T")
+        start_date = start_date_raw[0]
+        end_date_raw = flight_search_results["data"][0]["route"][1]["local_departure"].split("T")
+        end_date = end_date_raw[0]
+        # print(from_city, from_iata, to_city, to_iata, start_date, end_date)
+
+        # print the cheapest price tickets
+        flight_price = flight_search_results["data"][0]["price"]
+        # print(f"{current_city}: ${flight_price}")
+        
+        # compare desired price against cheapest price
+        if flight_price < desired_price:
+            # return jsonify({"success": True, "flight_price": flight_price})
+            flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
+            # twilio.send_text(message=message)
+            # twilio.send_emails(message=message)
+
+    except IndexError or TypeError:
+        flight_search_results = crud.flight_search(city_from_iata, city_to_iata, 2)
+        
+        stop_over_city = flight_search_results["data"][0]["route"][0]["cityTo"]
+        origin_city = flight_search_results["data"][0]["route"][0]["cityFrom"]
+        origin_airport = flight_search_results["data"][0]["route"][0]["cityCodeFrom"]
+        destination_city = flight_search_results["data"][0]["route"][1]["cityTo"]
+        destination_airport = flight_search_results["data"][0]["route"][1]["cityCodeTo"]
+        out_date_raw = flight_search_results["data"][0]["route"][0]["local_departure"].split("T")
+        out_date = out_date_raw[0]
+        return_date_raw = flight_search_results["data"][0]["route"][2]["local_arrival"].split("T")
+        return_date = return_date_raw[0]
+
+        # no_direct_flights = FlightData(
+        #     stop_overs=2, 
+        #     via_city=stop_over_city,
+        #     origin_city=origin_city,
+        #     origin_airport=origin_airport,
+        #     destination_city=destination_city,
+        #     destination_airport=destination_airport, 
+        #     out_date=out_date,
+        #     return_date=return_date
+        #     )
+
+        # print the cheapest price tickets
+        flight_price = flight_search_results["data"][0]["price"]
+
+        if flight_price < desired_price:
+            # return jsonify({"success": True, "flight_price": flight_price})
+            flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
+            # twilio.send_text(message=message)
+            # twilio.send_emails(message=message)
+        else:
+            flash("Sorry, there are no flights right now that fit the criteria. We'll send you a message if one shows up!")
+    return jsonify({"success": True, "flight_price": flight_price})
     
 if __name__ == '__main__':
     connect_to_db(app)

@@ -10,6 +10,9 @@ from datetime import datetime, timedelta
 API_KEY = os.environ["YELP_API_KEY"]
 TEQUILA_KIWI_API_KEY = os.environ["TEQUILA_KIWI_API_KEY"]
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
+TEQUILA_KIWI_HEADERS = {
+        "apikey": TEQUILA_KIWI_API_KEY
+    }
 
 def create_user(fname, lname, email, username, password):
     new_user = User(
@@ -182,43 +185,41 @@ def get_popular_itineraries():
 
 def search_iata_code(city):
     query_endpoint = "https://api.tequila.kiwi.com/locations/query"
-
-    headers = {
-        "apikey": os.environ["TEQUILA_KIWI_API_KEY"]
-    }
     
     params = {
         "term": city
     }
 
-    get_response = requests.get(url=query_endpoint, headers=headers, params=params)
+    get_response = requests.get(url=query_endpoint, headers=TEQUILA_KIWI_HEADERS, params=params)
     city_info = get_response.json()
 
     return city_info["locations"][0]["code"]
 
 def flight_deal_search(current_user_id, city_from, city_from_iata, city_to, city_to_iata, desired_price):
+    # Create an instance of Deal with user input and return it
     new_entry = Deal(user_id=current_user_id, city_fr=city_from, city_fr_iata=city_from_iata, city_to=city_to, city_to_iata=city_to_iata, desired_price=desired_price)
 
     return new_entry
 
-def flight_search(self, iata_code, stop_overs):
+def flight_search(city_fr_iata, city_to_iata, stoppovers):
+    # Use Tequila Kiwi API to search for flights that match certain criteria
     search_endpoint = "https://api.tequila.kiwi.com/v2/search"
 
     params = {
-        "fly_from": "SFO",
-        "fly_to": iata_code,
+        "fly_from": city_fr_iata,
+        "fly_to": city_to_iata,
         "date_from": (datetime.now() + timedelta(days=1)).strftime("%d/%m/%Y"),
         "date_to": (datetime.now() + timedelta(days=181)).strftime("%d/%m/%Y"),
         "nights_in_dst_from": 7,
         "nights_in_dst_to": 30,
         "flight_type": "round",
         "one_for_city": 1,
-        "max_stopovers": stop_overs,
+        "max_stopovers": stoppovers,
         "curr": "USD",
 
     }
 
-    response = requests.get(url=search_endpoint, headers=self.headers, params=params)
+    response = requests.get(url=search_endpoint, headers=TEQUILA_KIWI_HEADERS, params=params)
     result = response.json()
 
     return result
