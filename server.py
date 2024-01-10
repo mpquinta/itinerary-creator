@@ -329,10 +329,14 @@ def track_flight():
         
         # compare desired price against cheapest price
         if flight_price < desired_price:
-            # return jsonify({"success": True, "flight_price": flight_price})
-            flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
+            return jsonify({"success": True, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date})
+            # flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
             # twilio.send_text(message=message)
             # twilio.send_emails(message=message)
+        
+        else:
+            return jsonify({"success": False, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date})
+    
 
     except IndexError or TypeError:
         flight_search_results = crud.flight_search(city_from_iata, city_to_iata, 2)
@@ -347,28 +351,16 @@ def track_flight():
         return_date_raw = flight_search_results["data"][0]["route"][2]["local_arrival"].split("T")
         return_date = return_date_raw[0]
 
-        # no_direct_flights = FlightData(
-        #     stop_overs=2, 
-        #     via_city=stop_over_city,
-        #     origin_city=origin_city,
-        #     origin_airport=origin_airport,
-        #     destination_city=destination_city,
-        #     destination_airport=destination_airport, 
-        #     out_date=out_date,
-        #     return_date=return_date
-        #     )
-
         # print the cheapest price tickets
         flight_price = flight_search_results["data"][0]["price"]
 
         if flight_price < desired_price:
-            # return jsonify({"success": True, "flight_price": flight_price})
-            flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
+            return jsonify({"success": True, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date})
+            # flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
             # twilio.send_text(message=message)
             # twilio.send_emails(message=message)
         else:
-            flash("Sorry, there are no flights right now that fit the criteria. We'll send you a message if one shows up!")
-    return jsonify({"success": True, "flight_price": flight_price})
+            return jsonify({"success": False, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date})
     
 if __name__ == '__main__':
     connect_to_db(app)

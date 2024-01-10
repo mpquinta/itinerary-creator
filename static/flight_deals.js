@@ -24,6 +24,20 @@ function displayResults(evt) {
         .then((jsonResponse) => {
             // display results message on page or "Sorry, there are no flights right now that fit the criteria. We'll send you a message if one shows up!"
             console.log(jsonResponse)
+
+            // Select div in flight_deals HTML so we can insert results we received from the server 
+            flightSearchResults = document.querySelector("#flight_search_result")
+
+            if(jsonResponse["success"] === false) {
+                flightSearchResults.innerHTML = `Sorry, we couldn't find a round trip that was cheaper than the price you wanted. 
+                The cheapest flight is $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
+                ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]}.`;
+
+            } else {
+                flightSearchResults.innerHTML = `Low price alert! 
+                    Only $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
+                    ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]}.`;
+            }
         });
 }
 searchBtn.addEventListener('click', displayResults);

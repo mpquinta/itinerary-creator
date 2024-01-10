@@ -25,7 +25,15 @@
                             <input type="text" class="form-control" name="desired_price" id="desired_price" placeholder="Desired price">
                         </div>
                         <div class="col-auto">
-                            <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Track Flights</button>
+                            <!-- <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Track Flights</button> -->
+                            <button class="w-100 btn btn-lg btn-primary" type="submit" id="search" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search</button>
+                        </div>
+
+
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body" id="flight_search_result">
+                                
+                            </div>
                         </div>
                     </form>
                 </p>
