@@ -31,12 +31,12 @@ function displayResults(evt) {
             if(jsonResponse["success"] === false) {
                 flightSearchResults.innerHTML = `Sorry, we couldn't find a round trip that was cheaper than the price you wanted. 
                 The cheapest flight is $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
-                ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]}.`;
+                ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
 
             } else {
                 flightSearchResults.innerHTML = `Low price alert! 
                     Only $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
-                    ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]}.`;
+                    ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
             }
         });
 }

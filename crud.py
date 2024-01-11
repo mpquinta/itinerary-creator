@@ -223,7 +223,19 @@ def flight_search(city_fr_iata, city_to_iata, stoppovers):
     result = response.json()
 
     return result
-        
+
+def get_carrier_info(id):
+    search_endpoint = "https://tequila-api.kiwi.com/carriers"
+
+    response = requests.get(url=search_endpoint)
+    carriers = response.json()
+
+    # results returns an array with dictionaries that contain carrier information
+    # iterate over array and check each dict's id to see if it matches ID
+    for carrier in carriers:
+        # save carrier info in a variable and return it
+        if carrier["id"] == id:
+            return carrier["name"]
 
 if __name__ == '__main__':
     from server import app
