@@ -1,4 +1,13 @@
 'user strict';
+// create a like button 
+const createLikeButton = () => {
+    const likeButton = document.createElement("button");
+    likeButton.setAttribute("class", "btn btn-primary");
+    likeButton.setAttribute("type", "submit");
+    likeButton.innerHTML = "Save this flight";
+
+    return likeButton
+}
 
 // List search results
 const searchBtn = document.querySelector('#search');
@@ -33,10 +42,14 @@ function displayResults(evt) {
                 The cheapest flight is $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
                 ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
 
+                flightSearchResults.insertAdjacentElement("beforeend", createLikeButton())
+
             } else {
                 flightSearchResults.innerHTML = `Low price alert! 
                     Only $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
                     ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
+
+                    flightSearchResults.insertAdjacentElement("beforeend", createLikeButton())
             }
         });
 }
