@@ -365,6 +365,23 @@ def track_flight():
             # twilio.send_emails(message=message)
         else:
             return jsonify({"success": False, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
+
+@app.route('/save_flight', methods=["POST"])
+def save_flight():
+    """Saves flight details to a user's profile"""
+    # retrive flight information + user information 
+    user = crud.get_user(session.get("logged_in_user"))
+    flight_price = request.get_json().get("flight_price")
+    from_city = request.get_json().get("from_city")
+    to_city = request.get_json().get("to_city")
+    start_date = request.get_json().get("start_date") 
+    end_date = request.get_json().get("end_date")
+    carrier = request.get_json().get("carrier_name")       
+
+    # save into database
+    deal_entry = crud.save_flight(user.user_id, flight_price, from_city, to_city, start_date, end_date, carrier)
+    db.session.add(deal_entry)
+    db.session.commit()
     
 if __name__ == '__main__':
     connect_to_db(app)
