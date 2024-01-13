@@ -197,7 +197,7 @@ def search_iata_code(city):
 
 def save_flight(user, flight_price, from_city, to_city, start_date, end_date, carrier):
     # Create an instance of Deal with user input and return it
-    new_entry = Deal(user_id=user, flight_price=flight_price, from_city=from_city, to_city=to_city, start_date=start_date, end_date=end_date, carrier=carrier)
+    new_entry = Deal(user_id=user, flight_price=flight_price, city_fr=from_city, city_to=to_city, departure_date=start_date, return_date=end_date, carrier=carrier)
 
     return new_entry
 

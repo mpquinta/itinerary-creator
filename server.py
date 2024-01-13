@@ -376,12 +376,14 @@ def save_flight():
     to_city = request.get_json().get("to_city")
     start_date = request.get_json().get("start_date") 
     end_date = request.get_json().get("end_date")
-    carrier = request.get_json().get("carrier_name")       
+    carrier = request.get_json().get("carrier")       
 
     # save into database
     deal_entry = crud.save_flight(user, flight_price, from_city, to_city, start_date, end_date, carrier)
     db.session.add(deal_entry)
     db.session.commit()
+
+    return jsonify({"success": True})
     
 if __name__ == '__main__':
     connect_to_db(app)
