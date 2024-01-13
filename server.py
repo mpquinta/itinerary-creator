@@ -370,7 +370,7 @@ def track_flight():
 def save_flight():
     """Saves flight details to a user's profile"""
     # retrive flight information + user information 
-    user = crud.get_user(session.get("logged_in_user"))
+    user = (crud.get_user(session.get("logged_in_user"))).user_id
     flight_price = request.get_json().get("flight_price")
     from_city = request.get_json().get("from_city")
     to_city = request.get_json().get("to_city")
@@ -379,7 +379,7 @@ def save_flight():
     carrier = request.get_json().get("carrier_name")       
 
     # save into database
-    deal_entry = crud.save_flight(user.user_id, flight_price, from_city, to_city, start_date, end_date, carrier)
+    deal_entry = crud.save_flight(user, flight_price, from_city, to_city, start_date, end_date, carrier)
     db.session.add(deal_entry)
     db.session.commit()
     
