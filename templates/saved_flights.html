@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{user.username}}'s Itineraries{% endblock %}
+
+{% block body %}
+<main class="container">
+    <section class="p-4 p-md-5 mb-1 rounded">
+        <div class="col-md-3 px-0 center">
+            <img src="/static/img/itineraries.png" alt="itineraries header">
+            <!-- <h1 class="display-4">{{user.username}}'s Itineraries</h1>        -->
+        </div>
+    </section>
+
+    <div class="row row-cols-2 row-cols-md-1 g-4">
+        
+        {% for itinerary in itineraries %}
+        <div class="col">
+            <div class="card shadow-sm">
+                <!-- <img loading="lazy" src="/static/img/circle.png" class="card-img-top" alt="travel"> -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{itinerary.name}}</h5>
+                            {% if itinerary.itinerary_entries != [] %}
+                                <span class="card-text">{{itinerary.itinerary_entries[0].scheduled_day.strftime("%m/%d/%Y")}} - {{itinerary.itinerary_entries[-1].scheduled_day.strftime("%m/%d/%Y")}}</span>
+                            {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted"><a href="/itineraries/{{itinerary.name}}_{{itinerary.itinerary_id}}">Edit</a> | {{ itinerary.itinerary_entries|length }} entries - {{itinerary.likes}} likes</small>
+                    </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+    
+{% endblock %}

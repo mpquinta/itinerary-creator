@@ -237,6 +237,11 @@ def get_carrier_info(id):
         if carrier["id"] == id:
             return carrier["name"]
 
+def saved_flights(user):
+    flights = Deal.query.filter_by(user_id=user)
+
+    return flights
+    
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

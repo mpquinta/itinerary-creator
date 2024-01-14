@@ -380,6 +380,20 @@ def save_flight():
     db.session.commit()
 
     return jsonify({"success": True})
+
+@app.route('/saved_flights')
+def saved_flights():
+    """View all of user's saved flights."""
+
+    return render_template('/saved_flights.html')
+
+@app.route('get_saved_flights_info', methods=["GET"])
+def get_saved_flights_info():
+    user = (crud.get_user(session.get("logged_in_user"))).user_id
+
+    user_flights = crud.saved_flights(user)
+
+    return jsonify(user_flights)
     
 if __name__ == '__main__':
     connect_to_db(app)
