@@ -295,14 +295,6 @@ def track_flight():
     city_to = request.get_json().get("city_to")
     city_to_iata = crud.search_iata_code(request.get_json().get("city_to"))
     desired_price = int(request.get_json().get("desired_price"))
-    user = crud.get_user(session.get("logged_in_user"))
-
-    print(city_from)
-    
-    # # save into database
-    # deal_entry = crud.flight_deal_search(user.user_id, city_from, city_from_iata, city_to, city_to_iata, desired_price)
-    # db.session.add(deal_entry)
-    # db.session.commit()
 
     # run function automatically to see if there is a flight that matches criteria
     flight_search_results = crud.flight_search(city_from_iata, city_to_iata, 0)
@@ -340,31 +332,35 @@ def track_flight():
 
     except IndexError or TypeError:
         flight_search_results = crud.flight_search(city_from_iata, city_to_iata, 2)
-        
-        stop_over_city = flight_search_results["data"][0]["route"][0]["cityTo"]
-        origin_city = flight_search_results["data"][0]["route"][0]["cityFrom"]
-        origin_airport = flight_search_results["data"][0]["route"][0]["cityCodeFrom"]
-        destination_city = flight_search_results["data"][0]["route"][1]["cityTo"]
-        destination_airport = flight_search_results["data"][0]["route"][1]["cityCodeTo"]
-        out_date_raw = flight_search_results["data"][0]["route"][0]["local_departure"].split("T")
-        out_date = out_date_raw[0]
-        return_date_raw = flight_search_results["data"][0]["route"][2]["local_arrival"].split("T")
-        return_date = return_date_raw[0]
-        carrier_id = flight_search_results["data"][0]["route"][0]["airline"]
-        
-        # get carrier info
-        carrier_info = crud.get_carrier_info(carrier_id)
 
-        # print the cheapest price tickets
-        flight_price = flight_search_results["data"][0]["price"]
+        try:        
+            stop_over_city = flight_search_results["data"][0]["route"][0]["cityTo"]
+            origin_city = flight_search_results["data"][0]["route"][0]["cityFrom"]
+            origin_airport = flight_search_results["data"][0]["route"][0]["cityCodeFrom"]
+            destination_city = flight_search_results["data"][0]["route"][1]["cityTo"]
+            destination_airport = flight_search_results["data"][0]["route"][1]["cityCodeTo"]
+            out_date_raw = flight_search_results["data"][0]["route"][0]["local_departure"].split("T")
+            out_date = out_date_raw[0]
+            return_date_raw = flight_search_results["data"][0]["route"][2]["local_arrival"].split("T")
+            return_date = return_date_raw[0]
+            carrier_id = flight_search_results["data"][0]["route"][0]["airline"]
+            
+            # get carrier info
+            carrier_info = crud.get_carrier_info(carrier_id)
 
-        if flight_price < desired_price:
-            return jsonify({"success": True, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
-            # flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
-            # twilio.send_text(message=message)
-            # twilio.send_emails(message=message)
-        else:
-            return jsonify({"success": False, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
+            # print the cheapest price tickets
+            flight_price = flight_search_results["data"][0]["price"]
+
+            if flight_price < desired_price:
+                return jsonify({"success": True, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
+                # flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
+                # twilio.send_text(message=message)
+                # twilio.send_emails(message=message)
+            else:
+                return jsonify({"success": False, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
+        
+        except IndexError or TypeError:
+            return jsonify({"success": False, "message": "Sorry, there are no flights that exist at this time."})
 
 @app.route('/save_flight', methods=["POST"])
 def save_flight():

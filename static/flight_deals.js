@@ -65,15 +65,19 @@ function displayResults(evt) {
             flightSearchResults = document.querySelector("#flight_search_result")
 
             if(jsonResponse["success"] === false) {
-                flightSearchResults.innerHTML = `Sorry, we couldn't find a round trip that was cheaper than the price you wanted. 
-                The cheapest flight is $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
-                ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
 
-                flightSearchResults.insertAdjacentElement("beforeend", createLikeButton())
-
-                const saveFlightBtn = document.querySelector("#save-flight");
-                saveFlightBtn.addEventListener('click', saveFlight.bind(jsonResponse));
-
+                if(jsonResponse["message"]) {
+                    flightSearchResults.innerHTML = jsonResponse["message"]
+                } else {
+                    flightSearchResults.innerHTML = `Sorry, we couldn't find a round trip that was cheaper than the price you wanted. 
+                    The cheapest flight is $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
+                    ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
+    
+                    flightSearchResults.insertAdjacentElement("beforeend", createLikeButton())
+    
+                    const saveFlightBtn = document.querySelector("#save-flight");
+                    saveFlightBtn.addEventListener('click', saveFlight.bind(jsonResponse));
+                }
             } else {
                 flightSearchResults.innerHTML = `Low price alert! 
                     Only $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
