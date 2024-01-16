@@ -238,9 +238,9 @@ def get_carrier_info(id):
             return carrier["name"]
 
 def saved_flights(user):
-    flights = Deal.query.filter_by(user_id=user)
+    flights = Deal.query.filter_by(user_id=user).all()   
 
-    return flights
+    return json.dump(flights)
     
 if __name__ == '__main__':
     from server import app
