@@ -387,20 +387,10 @@ def saved_flights():
 
     user = (crud.get_user(session.get("logged_in_user")))
 
-    return render_template('/saved_flights.html', user=user)
+    user_flights = crud.saved_flights(user.user_id)
 
-@app.route('/get_saved_flights_info')
-def get_saved_flights_info():
-    """Returns a JSON response with all itinerary info"""
-
-    user = (crud.get_user(session.get("logged_in_user"))).user_id
-
-    user_flights = crud.saved_flights(user)
-
-    return jsonify(user_flights)
-
-    # return jsonify(crud.get_itinerary_details(session.get("current_itinerary")))
-    
+    return render_template('/saved_flights.html', user=user, user_flights=user_flights)
+ 
 if __name__ == '__main__':
     connect_to_db(app)
     app.run()

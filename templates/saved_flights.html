@@ -4,14 +4,21 @@
 
 {% block body %}
 <main class="container">
-    <section class="p-4 p-md-5 mb-1 rounded">
-        <div class="col-md-3 px-0 center">
-            <img src="/static/img/itineraries.png" alt="itineraries header">
-            <!-- <h1 class="display-4">{{user.username}}'s Itineraries</h1>        -->
+    <section class="py-5 text-center container">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <img src="/static/img/saved_flight_deals.png" class="img-fluid" alt="saved flights header">
         </div>
     </section>
 
+    <br><br>
+
     <ul class="list-group" id="saved_flights_container">
+        {%for flight in user_flights%}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{flight.city_fr}} to {{flight.city_to}} with {{flight.carrier}} from {{(flight.departure_date).strftime("%m/%d/%y")}} to {{(flight.return_date).strftime("%m/%d/%y")}}.
+            <span class="badge bg-primary rounded-pill">${{flight.flight_price}}</span>
+          </li>
+        {%endfor%}
 
     </ul>
 </main>
