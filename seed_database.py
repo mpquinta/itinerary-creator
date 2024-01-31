@@ -4,7 +4,7 @@ import os
 import json
 import requests
 from random import choice, randint
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 import crud
 import model
@@ -57,6 +57,8 @@ for category in categories:
 users_in_db = []
 entries_in_db = []
 itineraries_in_db =[]
+flight_deals_in_db = []
+
 for i in range(1, 4):
     fname = f"First {i}"
     lname = f"Last {i}"
@@ -74,9 +76,13 @@ for i in range(1, 4):
         new_itinerary_entry = crud.create_entry(j, randint(1, 25), f"2022-08-04 {j}:00")
         entries_in_db.append(new_itinerary_entry)
 
+        save_flight_deal = crud.save_flight(i, randint(100, 500), "San Francisco", "San Diego", datetime.now(), (datetime.now() + timedelta(days=1)), "Alaska Airlines")
+        flight_deals_in_db.append(save_flight_deal)
+
 model.db.session.add_all(users_in_db)
 model.db.session.add_all(entries_in_db)
 model.db.session.add_all(itineraries_in_db)
+model.db.session.add_all(flight_deals_in_db)
 model.db.session.commit()
 
 
