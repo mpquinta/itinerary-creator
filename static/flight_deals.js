@@ -62,10 +62,10 @@ function displayResults(evt) {
             console.log(jsonResponse)
 
             // Select div in flight_deals HTML so we can insert results we received from the server 
-            flightSearchResults = document.querySelector("#flight_search_result")
+            flightSearchResults = document.querySelector("#search-results")
 
             if(jsonResponse["success"] === false) {
-
+                flightSearchResults.innerHTML = ""
                 if(jsonResponse["message"]) {
                     flightSearchResults.innerHTML = jsonResponse["message"]
                 } else {

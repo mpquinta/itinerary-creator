@@ -13,7 +13,6 @@
             <div class="col-lg-6 col-md-8 mx-auto">
                 <img src="/static/img/search-flight-deals.png" class="img-fluid" alt="search flight deals header">
 
-                <p>
                     <form>
                         <div class="col-auto">
                             <input type="text" class="form-control" name="city_from" id="city_from" placeholder="Enter origin city">
@@ -28,28 +27,19 @@
                             <!-- <button type="submit" id="search" class="w-100 btn btn-lg btn-primary">Track Flights</button> -->
                             <button class="w-100 btn btn-lg btn-primary" type="submit" id="search" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Search</button>
                         </div>
-
-
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body" id="flight_search_result">
-                                
-                            </div>
-                        </div>
                     </form>
-                </p>
+            </div>
+        </div>
+
+        <!-- section for search results  -->
+        <div id="search-results-container">
+            <div class="container">
+                <div class="col-lg-6 col-md-8 mx-auto" id="search-results">
+
+                </div>
             </div>
         </div>
     </section>
-
-
-    <!-- section for search results  -->
-    <div id="search-results-container">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="search-results">
-
-            </div>
-        </div>
-    </div>
 
     <script src="/static/flight_deals.js"></script>
 {% endblock %}
