@@ -385,7 +385,7 @@ def save_flight():
 def saved_flights():
     """View all of user's saved flights."""
 
-    user = (crud.get_user(session.get("logged_in_user"))).user_id
+    user = (crud.get_user(session.get("logged_in_user")))
 
     user_flights = crud.saved_flights(user.user_id)
 
