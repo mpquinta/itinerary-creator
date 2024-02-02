@@ -63,9 +63,9 @@ function displayResults(evt) {
 
             // Select div in flight_deals HTML so we can insert results we received from the server 
             flightSearchResults = document.querySelector("#search-results")
+            flightSearchResults.innerHTML = "Loading. . ."
 
             if(jsonResponse["success"] === false) {
-                flightSearchResults.innerHTML = ""
                 if(jsonResponse["message"]) {
                     flightSearchResults.innerHTML = jsonResponse["message"]
                 } else {
@@ -82,7 +82,8 @@ function displayResults(evt) {
                 flightSearchResults.innerHTML = `Low price alert! 
                     Only $${jsonResponse["flight_price"]} to fly from ${jsonResponse["from_city"]} to 
                     ${jsonResponse["to_city"]} from ${jsonResponse["start_date"]} to ${jsonResponse["end_date"]} with ${jsonResponse["carrier_name"]}.`;
-
+                    var br = document.createElement("br");
+                    flightSearchResults.appendChild(br);
                     flightSearchResults.insertAdjacentElement("beforeend", createLikeButton())
 
                     const saveFlightBtn = document.querySelector("#save-flight");

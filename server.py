@@ -320,7 +320,7 @@ def track_flight():
         # print(f"{current_city}: ${flight_price}")
         
         # compare desired price against cheapest price
-        if flight_price < desired_price:
+        if flight_price <= desired_price:
             return jsonify({"success": True, "from_city": from_city, "to_city": to_city, "flight_price": flight_price, "start_date": start_date, "end_date": end_date, "carrier_name": carrier_info})
             # flash(f"Low price alert! Only ${flight_price} to fly from {from_city}-{from_iata} to {to_city}-{to_iata} from {start_date} to {end_date}.")
             # twilio.send_text(message=message)
@@ -388,6 +388,8 @@ def saved_flights():
     user = (crud.get_user(session.get("logged_in_user")))
 
     user_flights = crud.saved_flights(user.user_id)
+
+    flash("Flight successfully saved!")
 
     return render_template('/saved_flights.html', user=user, user_flights=user_flights)
  
